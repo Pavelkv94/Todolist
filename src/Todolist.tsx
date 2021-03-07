@@ -12,20 +12,28 @@ type TodolistType = {
     removeTask: (id: string) => void
     changeFilter: (value: FilterType) => void
     addTasks: (title: string) => void
+    changeTaskStatus: (taskId: string, newIsDone: boolean) => void
 }
 
 export function Todolist(props: TodolistType) {
     let [title, setTitle] = useState("")
 
+    let [error,setError] = useState<string | null>(null)
     const addTask = () => {
-        props.addTasks(title);
-        setTitle("")
+        const trimmerTitle = title.trim()
+        if (trimmerTitle) {
+            props.addTasks(title);
+            setTitle("")
+        } else {
+            setError("Title is required!")
+        }
     }
     const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") { addTask() }
+        setError(null);
+        if (e.key === "Enter") { addTask(); }
     }
 
     const setAllFilter = () => { props.changeFilter("all") };
@@ -35,9 +43,12 @@ export function Todolist(props: TodolistType) {
     const tasks = props.tasks.map(
         t => {
             const remove = () => { props.removeTask(t.id) }
+            const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
+                props.changeTaskStatus(t.id, e.currentTarget.checked)
             return <li key={t.id}>
                 <input type="checkbox"
-                    checked={t.isDone} />
+                    checked={t.isDone}
+                    onChange={changeTaskStatus} />
                 <span>{t.title}</span>
                 <button onClick={remove}>X</button>
             </li>
@@ -51,8 +62,10 @@ export function Todolist(props: TodolistType) {
                 <input
                     value={title}
                     onChange={onChangeTitle}
-                    onKeyPress={onKeyPressAddTask} />
+                    onKeyPress={onKeyPressAddTask} 
+                    className={error? "error" : ""}/>
                 <button onClick={addTask}>+</button>
+                {error && <div className= "errorMessage">{error}</div>}
             </div>
             <ul>
                 {tasks}
