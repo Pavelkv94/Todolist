@@ -1,25 +1,25 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-type TaskType = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
 }
 export type FilterType = "all" | "active" | "complete"
 
-type TodolistType = {
+type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
     filter: FilterType
-    removeTask: (id: string) => void
-    changeFilter: (value: FilterType) => void
-    addTasks: (title: string) => void
-    changeTaskStatus: (taskId: string, newIsDone: boolean) => void
+    removeTask: (taskID: string, todolistID: string) => void
+    changeFilter: (value: FilterType, todolistID: string) => void
+    addTasks: (title: string, todolistID: string) => void
+    changeTaskStatus: (taskId: string, newIsDone: boolean, todolistID: string) => void
 }
 
-export function Todolist(props: TodolistType) {
+export function Todolist(props: TodolistPropsType) {
     let [title, setTitle] = useState("")
 
-    let [error,setError] = useState<string | null>(null)
+    let [error, setError] = useState<string | null>(null)
     const addTask = () => {
         const trimmerTitle = title.trim()
         if (trimmerTitle) {
@@ -63,10 +63,10 @@ export function Todolist(props: TodolistType) {
                 <input
                     value={title}
                     onChange={onChangeTitle}
-                    onKeyPress={onKeyPressAddTask} 
-                    className={error? "error" : ""}/>
+                    onKeyPress={onKeyPressAddTask}
+                    className={error ? "error" : ""} />
                 <button onClick={addTask}>+</button>
-                {error && <div className= "errorMessage">{error}</div>}
+                {error && <div className="errorMessage">{error}</div>}
             </div>
             <ul>
                 {tasks}
