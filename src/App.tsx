@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import { Todolist } from './Todolist';
 
 function App() {
-    const tasks = [
-        {id:v1(), title: "HTML&CSS", isDone: true},
-        {id:v1(), title: "JS", isDone: true},
-        {id:v1(), title: "React", isDone: false},
-        {id:v1(), title: "Git", isDone: false},
-        {id:v1(), title: "SCSS", isDone: false}
-    ]
+    let [tasks, setTask] = useState([
+        { id: v1(), title: "HTML&CSS", isDone: true },
+        { id: v1(), title: "JS", isDone: true },
+        { id: v1(), title: "React", isDone: false },
+        { id: v1(), title: "Git", isDone: false },
+        { id: v1(), title: "SCSS", isDone: false }
+    ])
+
+    function removeTask(id: string) {
+        let filterTasks = tasks.filter(t => t.id != id);
+        setTask(filterTasks)
+    }
     return (
         <div className="App">
-           <Todolist title="What tot learn" tasks={tasks}/>
+            <Todolist
+                title="What tot learn"
+                tasks={tasks}
+                removeTask={removeTask}
+            />
         </div>
     );
 }
