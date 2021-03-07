@@ -75,27 +75,27 @@ function App() {
         setTodolists([...todoLists])
     }
 
+    const TodolistComponents = todoLists.map(tl => {
+        let tasksForTodolist = tasks[tl.id];
+        if (tl.filter === "active") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false); }
+        if (tl.filter === "complete") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true); }
+
+        return (
+            <Todolist
+                id={tl.id}
+                title={tl.title}
+                tasks={tasksForTodolist}
+                removeTask={removeTask}
+                changeFilter={changeFilter}
+                addTasks={addTask}
+                changeTaskStatus={changeStatus}
+                filter={tl.filter}
+            />
+        )
+    })
     return (
         <div className="App">
-            {todoLists.map(tl => {
-                let tasksForTodolist = tasks[tl.id];
-                if (tl.filter === "active") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false); }
-                if (tl.filter === "complete") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true); }
-
-                return (
-                    <Todolist
-                        id={tl.id}
-                        title={tl.title}
-                        tasks={tasksForTodolist}
-                        removeTask={removeTask}
-                        changeFilter={changeFilter}
-                        addTasks={addTask}
-                        changeTaskStatus={changeStatus}
-                        filter={tl.filter}
-                    />
-                )
-            })
-            }
+            {TodolistComponents}
 
         </div>
     );
