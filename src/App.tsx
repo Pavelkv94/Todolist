@@ -71,24 +71,32 @@ function App() {
 
     function changeFilter(value: FilterType, todolistID: string) {
         const todolistSingle = todoLists.find(tl => tl.id === todolistID)//ищем нужный тудулист
-        if(todolistSingle) {todolistSingle.filter = value}
+        if (todolistSingle) { todolistSingle.filter = value }
         setTodolists([...todoLists])
     }
-    let tasksForTodolist = tasks;
-    if (filter === "active") { tasksForTodolist = tasks.filter(t => t.isDone === false); }
-    if (filter === "complete") { tasksForTodolist = tasks.filter(t => t.isDone === true); }
 
     return (
         <div className="App">
-            <Todolist
-                title="What tot learn"
-                tasks={tasksForTodolist}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
-                addTasks={addTask}
-                changeTaskStatus={changeStatus}
-                filter={filter}
-            />
+            {todoLists.map(tl => {
+                let tasksForTodolist = tasks[tl.id];
+                if (tl.filter === "active") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false); }
+                if (tl.filter === "complete") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true); }
+
+                return (
+                    <Todolist
+                        id={tl.id}
+                        title={tl.title}
+                        tasks={tasksForTodolist}
+                        removeTask={removeTask}
+                        changeFilter={changeFilter}
+                        addTasks={addTask}
+                        changeTaskStatus={changeStatus}
+                        filter={tl.filter}
+                    />
+                )
+            })
+            }
+
         </div>
     );
 }

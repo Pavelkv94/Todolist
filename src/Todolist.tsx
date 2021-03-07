@@ -7,6 +7,7 @@ export type TaskType = {
 export type FilterType = "all" | "active" | "complete"
 
 type TodolistPropsType = {
+    id:string
     title: string
     tasks: Array<TaskType>
     filter: FilterType
@@ -23,7 +24,7 @@ export function Todolist(props: TodolistPropsType) {
     const addTask = () => {
         const trimmerTitle = title.trim()
         if (trimmerTitle) {
-            props.addTasks(title);
+            props.addTasks(trimmerTitle, props.id);
             setTitle("")
         } else {
             setError("Title is required!")
@@ -37,15 +38,15 @@ export function Todolist(props: TodolistPropsType) {
         if (e.key === "Enter") { addTask(); }
     }
 
-    const setAllFilter = () => { props.changeFilter("all") };
-    const setActiveFilter = () => { props.changeFilter("active") };
-    const setCompleteFilter = () => { props.changeFilter("complete") };
+    const setAllFilter = () => { props.changeFilter("all", props.id )};
+    const setActiveFilter = () => { props.changeFilter("active", props.id) };
+    const setCompleteFilter = () => { props.changeFilter("complete", props.id) };
 
     const tasks = props.tasks.map(
         t => {
-            const remove = () => { props.removeTask(t.id) }
+            const remove = () => { props.removeTask(t.id, props.id) }
             const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
-                props.changeTaskStatus(t.id, e.currentTarget.checked)
+                props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
             return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                 <input type="checkbox"
                     checked={t.isDone}
