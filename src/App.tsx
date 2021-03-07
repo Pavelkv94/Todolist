@@ -68,13 +68,16 @@ function App() {
     }
 
     //Filter tasks on buttons
-
     function changeFilter(value: FilterType, todolistID: string) {
         const todolistSingle = todoLists.find(tl => tl.id === todolistID)//ищем нужный тудулист
         if (todolistSingle) { todolistSingle.filter = value }
         setTodolists([...todoLists])
     }
-
+    //Delete Todolist
+    function removeTodolist (todolistID:string) {
+        setTodolists(todoLists.filter(tl=>tl.id!== todolistID))
+        delete tasks[todolistID]
+    }
     const TodolistComponents = todoLists.map(tl => {
         let tasksForTodolist = tasks[tl.id];
         if (tl.filter === "active") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false); }
@@ -90,6 +93,7 @@ function App() {
                 addTasks={addTask}
                 changeTaskStatus={changeStatus}
                 filter={tl.filter}
+                removeTodolist={removeTodolist}
             />
         )
     })
