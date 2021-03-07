@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 type TaskType = {
     id: string
     title: string
@@ -14,10 +14,35 @@ type TodolistType = {
     addTasks: (title: string) => void
 }
 
-
 export function Todolist(props: TodolistType) {
     let [title, setTitle] = useState("")
 
+    const addTask = () => {
+        props.addTasks(title);
+        setTitle("")
+    }
+    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") { addTask() }
+    }
+
+    const setAllFilter = () => { props.changeFilter("all") };
+    const setActiveFilter = () => { props.changeFilter("active") };
+    const setCompleteFilter = () => { props.changeFilter("complete") };
+
+    const tasks = props.tasks.map(
+        t => {
+            const remove = () => { props.removeTask(t.id) }
+            return <li key={t.id}>
+                <input type="checkbox"
+                    checked={t.isDone} />
+                <span>{t.title}</span>
+                <button onClick={remove}>X</button>
+            </li>
+        }
+    )
 
     return (
         <div>
@@ -25,34 +50,17 @@ export function Todolist(props: TodolistType) {
             <div>
                 <input
                     value={title}
-                    onChange={(e) => { setTitle(e.currentTarget.value) }}
-                    onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                            {
-                                props.addTasks(title);
-                                setTitle("")
-                            }
-                        }
-                    }} />
-                <button onClick={() => {
-                    props.addTasks(title);
-                    setTitle("")
-                }}>+</button>
+                    onChange={onChangeTitle}
+                    onKeyPress={onKeyPressAddTask} />
+                <button onClick={addTask}>+</button>
             </div>
             <ul>
-                {props.tasks.map(
-                    t =>
-                        <li key={t.id}>
-                            <input type="checkbox"
-                                checked={t.isDone} />
-                            <span>{t.title}</span>
-                            <button onClick={() => { props.removeTask(t.id) }}>X</button>
-                        </li>)}
+                {tasks}
             </ul>
             <div>
-                <button onClick={() => { props.changeFilter("all") }}>All</button>
-                <button onClick={() => { props.changeFilter("active") }}>Active</button>
-                <button onClick={() => { props.changeFilter("complete") }}>Completed</button>
+                <button onClick={setAllFilter}>All</button>
+                <button onClick={setActiveFilter}>Active</button>
+                <button onClick={setCompleteFilter}>Completed</button>
             </div>
         </div>
     )
