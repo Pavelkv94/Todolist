@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
+import { AddItemForm } from './AddItemForm';
 import './App.css';
 import { FilterType, Todolist, TaskType } from './Todolist';
 
@@ -97,8 +98,19 @@ function App() {
             />
         )
     })
+
+    function addTodolist(title:string) {
+       let  todolist: TodolistType = {
+           id: v1(),
+           title:title,
+           filter: "all"
+       }
+        setTodolists([todolist,...todoLists]);
+        setTasks({...tasks, [todolist.id]:[]})
+    }
     return (
         <div className="App">
+            <AddItemForm addItem = {addTodolist} />
             {TodolistComponents}
 
         </div>
