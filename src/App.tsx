@@ -48,7 +48,6 @@ function App() {
         tasks[todolistID] = filterTasks;
         setTasks({ ...tasks })
     }
-
     //Add tasks from input
     function addTask(title: string, todolistID: string) {
         let newTask = { id: v1(), title: title, isDone: false }; // новая таска
@@ -56,7 +55,6 @@ function App() {
         tasks[todolistID] = [newTask, ...todolistTasks]
         setTasks({ ...tasks })
     }
-
     //Change checkbox
     function changeStatus(id: string, newIsDone: boolean, todolistID: string) {
         const todolistTasks = tasks[todolistID];//ищем в каком тудулисте таска
@@ -67,7 +65,16 @@ function App() {
             setTasks({ ...tasks })
         }
     }
+    //Change text in tasks
+    function changeTaskTitle(id: string, newTitle: string, todolistID: string) {
+        const todolistTasks = tasks[todolistID];//ищем в каком тудулисте таска
 
+        const task = todolistTasks.find(t => t.id === id);
+        if (task) {
+            task.title = newTitle;
+            setTasks({ ...tasks })
+        }
+    }
     //Filter tasks on buttons
     function changeFilter(value: FilterType, todolistID: string) {
         const todolistSingle = todoLists.find(tl => tl.id === todolistID)//ищем нужный тудулист
@@ -95,6 +102,7 @@ function App() {
                 changeTaskStatus={changeStatus}
                 filter={tl.filter}
                 removeTodolist={removeTodolist}
+                changeTaskTitle={changeTaskTitle}
             />
         )
     })
