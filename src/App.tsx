@@ -81,9 +81,15 @@ function App() {
         if (todolistSingle) { todolistSingle.filter = value }
         setTodolists([...todoLists])
     }
+    //Change text in title for todolist
+    function changeTodolistTitle(newTitle: string, todolistID: string) {
+        const todolistSingle = todoLists.find(tl => tl.id === todolistID)//ищем нужный тудулист
+        if (todolistSingle) { todolistSingle.title = newTitle }
+        setTodolists([...todoLists])
+    }
     //Delete Todolist
-    function removeTodolist (todolistID:string) {
-        setTodolists(todoLists.filter(tl=>tl.id!== todolistID))
+    function removeTodolist(todolistID: string) {
+        setTodolists(todoLists.filter(tl => tl.id !== todolistID))
         delete tasks[todolistID]
     }
     const TodolistComponents = todoLists.map(tl => {
@@ -103,22 +109,24 @@ function App() {
                 filter={tl.filter}
                 removeTodolist={removeTodolist}
                 changeTaskTitle={changeTaskTitle}
+                changeTodolistTitle={changeTodolistTitle}
+
             />
         )
     })
 
-    function addTodolist(title:string) {
-       let  todolist: TodolistType = {
-           id: v1(),
-           title:title,
-           filter: "all"
-       }
-        setTodolists([todolist,...todoLists]);
-        setTasks({...tasks, [todolist.id]:[]})
+    function addTodolist(title: string) {
+        let todolist: TodolistType = {
+            id: v1(),
+            title: title,
+            filter: "all"
+        }
+        setTodolists([todolist, ...todoLists]);
+        setTasks({ ...tasks, [todolist.id]: [] })
     }
     return (
         <div className="App">
-            <AddItemForm addItem = {addTodolist} />
+            <AddItemForm addItem={addTodolist} />
             {TodolistComponents}
 
         </div>
