@@ -1,14 +1,10 @@
-.App {
-  padding: 30px;
-  display: flex;
-}
-
-.App > div {
-  margin-right: 50px;
+body {
+  background-color: #99c2ff;
 }
 
 .error {
-  border: red 1px solid;
+  background-color: rgb(255, 136, 136);
+  border-radius: 5px;
 }
 .errorMessage {
   color:red;
@@ -17,6 +13,16 @@
   background-color: aqua;
 }
 .is-done {
-  opacity: 0.6;
+  opacity: 0.9;
   text-decoration: line-through;
+}
+.btn:hover {
+cursor: pointer;
+transform: scale(0.8);
+transition: 0.5s;
+background-color: rgba(128, 128, 128, 0.267);
+}
+.default {
+  background-color: white;
+  border-radius: 5px;
 }
