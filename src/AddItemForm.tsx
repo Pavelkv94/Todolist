@@ -35,7 +35,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
                 onChange={onChangeTitle}
                 onKeyPress={onKeyPressAddTask}
                 className={error ? "error" : "default"} 
-                placeholder="Enter the task"/>
+                placeholder="Enter the text"/>
             <AddIcon fontSize="large" onClick={addTask} className="btn">+</AddIcon>
             {error && <div className="errorMessage">{error}</div>}
         </div>

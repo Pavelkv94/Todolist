@@ -56,7 +56,7 @@ export function Todolist(props: TodolistPropsType) {
             
             <h3>
                 <EditableSpan title={props.title} changeTitle={changeTodolistTitle} />
-                <HighlightOffIcon onClick={removeTodolist} className="btn" fontSize="default"> </HighlightOffIcon></h3>
+                <HighlightOffIcon onClick={removeTodolist} className="btn" fontSize="default" color="secondary"> </HighlightOffIcon></h3>
             <AddItemForm addItem={addTask} />
             <ul>
                 {tasks}
