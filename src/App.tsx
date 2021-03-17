@@ -132,7 +132,7 @@ function App() {
         <div className="App">
             <Container fixed>
                 <Grid container style={{ "margin": "15px" }}>
-                    <AppBar color="primary" position="absolute" >
+                    <AppBar color="primary" position="fixed" >
                         <Toolbar variant="regular">
                             <AddItemForm addItem={addTodolist}/>
                             </Toolbar>
