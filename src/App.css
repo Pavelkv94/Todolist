@@ -9,20 +9,32 @@ body {
 .errorMessage {
   color:red;
 }
-.active-filter {
-  background-color: aqua;
+.btn-filter:hover {
+  transform: scale(0.9);
+  transition: 0.5s;
 }
 .is-done {
   opacity: 0.9;
   text-decoration: line-through;
+}
+.btn {
+  border-radius: 50%;
 }
 .btn:hover {
 cursor: pointer;
 transform: scale(0.8);
 transition: 0.5s;
 background-color: rgba(128, 128, 128, 0.267);
+
 }
 .default {
   background-color: white;
   border-radius: 5px;
+}
+.btn-remove:hover {
+  transform: scale(1.3);
+  transition: 0.5s;
+}
+.checkbox:hover {
+color:blue
 }

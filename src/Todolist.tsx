@@ -40,11 +40,12 @@ export function Todolist(props: TodolistPropsType) {
             const changeTaskTitle = (newTitle: string) => { props.changeTaskTitle(t.id, newTitle, props.id) }
             return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                 <Checkbox 
+                    className = "checkbox"
                     color="primary"
                     checked={t.isDone}
                     onChange={changeTaskStatus} />
                 <EditableSpan title={t.title} changeTitle={changeTaskTitle} />
-                <IconButton onClick={remove}><Delete fontSize="small" /></IconButton>
+                <IconButton onClick={remove} className="btn-remove"><Delete fontSize="small" /></IconButton>
             </li>
         }
     )
@@ -62,9 +63,9 @@ export function Todolist(props: TodolistPropsType) {
                 {tasks}
             </ul>
             <div>
-                <Button variant={props.filter === 'all' ? "contained" : "outlined"} color="secondary" onClick={setAllFilter} className={props.filter === 'all' ? "active-filter" : ""}>All</Button>
-                <Button variant={props.filter === 'active' ? "contained" : "outlined"} color="secondary" onClick={setActiveFilter} className={props.filter === 'active' ? "active-filter" : ""}>Active</Button>
-                <Button variant={props.filter === 'complete' ? "contained" : "outlined"} color="secondary" onClick={setCompleteFilter} className={props.filter === 'complete' ? "active-filter" : ""}>Completed</Button>
+                <Button variant={props.filter === 'all' ? "contained" : "outlined"} color="secondary" onClick={setAllFilter} className="btn-filter">All</Button>
+                <Button variant={props.filter === 'active' ? "contained" : "outlined"} color="secondary" onClick={setActiveFilter} className="btn-filter">Active</Button>
+                <Button variant={props.filter === 'complete' ? "contained" : "outlined"} color="secondary" onClick={setCompleteFilter} className="btn-filter">Completed</Button>
             </div>
         </div>
     )
