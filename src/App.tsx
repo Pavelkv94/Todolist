@@ -99,7 +99,7 @@ function App() {
         if (tl.filter === "complete") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true); }
 
         return (
-            <Grid item>
+            <Grid item key={tl.id}>{/*Если нету key то дом заново перерисовывается, если есть то удаляется конкретный элемент*/}
                 <Paper style={{ "padding": "10px" }} elevation={3}>
                     <Todolist
                         id={tl.id}
