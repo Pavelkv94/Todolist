@@ -15,19 +15,19 @@ export function EditableSpan(props: EditableSpanPropsType) {
     const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     }
-const onEnter = (e:KeyboardEvent)=> {
-    if(e.key ==='Enter') {
-        setEditMode(false)
-        props.changeTitle(title)
+    const onEnter = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            setEditMode(false)
+            props.changeTitle(title)
+        }
     }
-}
-    
+
     const onEditMode = () => { setEditMode(true) };
     const offEditMode = () => {
         setEditMode(false);
         props.changeTitle(title);// для сохранения изменений в таске
     };
     return (
-        editMode ? <TextField  id="filled-basic"variant="filled" value={title} onChange={onChangeTitle} onBlur={offEditMode} autoFocus onKeyPress={onEnter} /> : <span onDoubleClick={onEditMode}>{props.title}</span>
+        editMode ? <TextField id="filled-basic" variant="filled" value={title} onChange={onChangeTitle} onBlur={offEditMode} autoFocus onKeyPress={onEnter} /> : <span onDoubleClick={onEditMode}>{props.title}</span>
     )
 }

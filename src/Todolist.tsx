@@ -39,8 +39,8 @@ export function Todolist(props: TodolistPropsType) {
                 props.changeTaskStatus(t.id, e.currentTarget.checked, props.id);
             const changeTaskTitle = (newTitle: string) => { props.changeTaskTitle(t.id, newTitle, props.id) }
             return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                <Checkbox 
-                    className = "checkbox"
+                <Checkbox
+                    className="checkbox"
                     color="primary"
                     checked={t.isDone}
                     onChange={changeTaskStatus} />
@@ -54,7 +54,7 @@ export function Todolist(props: TodolistPropsType) {
     const changeTodolistTitle = (title: string) => { props.changeTodolistTitle(title, props.id) };
     return (
         <div>
-            
+
             <h3>
                 <EditableSpan title={props.title} changeTitle={changeTodolistTitle} />
                 <HighlightOffIcon onClick={removeTodolist} className="btn" fontSize="default" color="secondary"> </HighlightOffIcon></h3>

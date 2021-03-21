@@ -7,7 +7,7 @@ body {
   border-radius: 5px;
 }
 .errorMessage {
-  color:red;
+  color: red;
 }
 .btn-filter:hover {
   transform: scale(0.9);
@@ -21,11 +21,10 @@ body {
   border-radius: 50%;
 }
 .btn:hover {
-cursor: pointer;
-transform: scale(0.8);
-transition: 0.5s;
-background-color: rgba(128, 128, 128, 0.267);
-
+  cursor: pointer;
+  transform: scale(0.8);
+  transition: 0.5s;
+  background-color: rgba(128, 128, 128, 0.267);
 }
 .default {
   background-color: white;
@@ -36,5 +35,5 @@ background-color: rgba(128, 128, 128, 0.267);
   transition: 0.5s;
 }
 .checkbox:hover {
-color:blue
+  color: blue;
 }

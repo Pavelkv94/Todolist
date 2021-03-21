@@ -7,7 +7,6 @@ export type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-
 export function AddItemForm(props: AddItemFormPropsType) {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
@@ -34,8 +33,8 @@ export function AddItemForm(props: AddItemFormPropsType) {
                 value={title}
                 onChange={onChangeTitle}
                 onKeyPress={onKeyPressAddTask}
-                className={error ? "error" : "default"} 
-                placeholder="Enter the text"/>
+                className={error ? "error" : "default"}
+                placeholder="Enter the text" />
             <AddIcon fontSize="large" onClick={addTask} className="btn">+</AddIcon>
             {error && <div className="errorMessage">{error}</div>}
         </div>

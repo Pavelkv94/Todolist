@@ -134,15 +134,15 @@ function App() {
                 <Grid container style={{ "margin": "15px" }}>
                     <AppBar color="primary" position="fixed" >
                         <Toolbar variant="regular">
-                            <AddItemForm addItem={addTodolist}/>
-                            </Toolbar>
-                            </AppBar>
+                            <AddItemForm addItem={addTodolist} />
+                        </Toolbar>
+                    </AppBar>
                 </Grid>
-                        <Grid container spacing={3} style={{"marginTop":"50px"}}>
-                        
-                            {TodolistComponents}
-                            
-                        </Grid>
+                <Grid container spacing={3} style={{ "marginTop": "50px" }}>
+
+                    {TodolistComponents}
+
+                </Grid>
             </Container>
 
         </div >
