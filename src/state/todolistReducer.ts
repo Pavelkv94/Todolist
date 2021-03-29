@@ -2,34 +2,29 @@ import { TodolistType } from "./../App";
 import { v1 } from "uuid";
 import { FilterType } from "../Todolist";
 
-type ActionType =
-  | RemoveTodolistActionType
-  | AddTodolistActionType
-  | ChangeFilterTodolistActionType
+export type ActionTypeOne = | RemoveTodolistActionType | AddTodolistActionType | ChangeFilterTodolistActionType
   | ChangeTitleTodolistActionType;
-type RemoveTodolistActionType = {
+
+export type RemoveTodolistActionType = {
   type: "REMOVE-TODOLIST";
   id: string;
 };
-type AddTodolistActionType = {
+export type AddTodolistActionType = {
   type: "ADD-TODOLIST";
   title: string;
 };
-type ChangeFilterTodolistActionType = {
+export type ChangeFilterTodolistActionType = {
   type: "CHANGE-FILTER-TODOLIST";
   id: string;
   filter: FilterType;
 };
-type ChangeTitleTodolistActionType = {
+export type ChangeTitleTodolistActionType = {
   type: "CHANGE-TITLE-TODOLIST";
   id: string;
   title: string;
 };
 
-export function todolistReducer(
-  todolists: Array<TodolistType>,
-  action: ActionType
-) {
+export function todolistReducer(todolists: Array<TodolistType>, action: ActionTypeOne): Array<TodolistType> {
   switch (action.type) {
     case "REMOVE-TODOLIST":
       return todolists.filter((tl) => tl.id !== action.id);
@@ -64,25 +59,24 @@ export function RemoveTodolistAC(id: string): RemoveTodolistActionType {
     type: "REMOVE-TODOLIST",
     id, // вместо id:id можно использовать просто id
   };
-};
+}
 export function AddTodolistAC(title: string): AddTodolistActionType {
   return {
     type: "ADD-TODOLIST",
     title, // вместо title:title можно использовать просто title
   };
-};
-export function ChangeFilterTodolistAC(id: string, filter:FilterType): ChangeFilterTodolistActionType {
+}
+export function ChangeFilterTodolistAC(id: string, filter: FilterType): ChangeFilterTodolistActionType {
   return {
     type: "CHANGE-FILTER-TODOLIST",
     id, // вместо id:id можно использовать просто id
-    filter,// вместо filter:filter можно использовать просто filter
+    filter, // вместо filter:filter можно использовать просто filter
   };
-};
-export function ChangeTitleTodolistAC(title: string, id:string): ChangeTitleTodolistActionType {
+}
+export function ChangeTitleTodolistAC(title: string, id: string): ChangeTitleTodolistActionType {
   return {
     type: "CHANGE-TITLE-TODOLIST",
     id,
     title, // вместо id:id можно использовать просто id
   };
-};
-
+}
