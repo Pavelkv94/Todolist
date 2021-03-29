@@ -1,12 +1,11 @@
 import { TodolistType } from "./../App";
-import React from "react";
 import { v1 } from "uuid";
 import { FilterType } from "../Todolist";
 
 type ActionType =
   | RemoveTodolistActionType
   | AddTodolistActionType
-  | FilterTodolistActionType
+  | ChangeFilterTodolistActionType
   | ChangeTitleTodolistActionType;
 type RemoveTodolistActionType = {
   type: "REMOVE-TODOLIST";
@@ -16,7 +15,7 @@ type AddTodolistActionType = {
   type: "ADD-TODOLIST";
   title: string;
 };
-type FilterTodolistActionType = {
+type ChangeFilterTodolistActionType = {
   type: "CHANGE-FILTER-TODOLIST";
   id: string;
   filter: FilterType;
@@ -58,3 +57,32 @@ export function todolistReducer(
       return todolists;
   }
 }
+
+//TODO CREATE ACTION CREATORs
+export function RemoveTodolistAC(id: string): RemoveTodolistActionType {
+  return {
+    type: "REMOVE-TODOLIST",
+    id, // вместо id:id можно использовать просто id
+  };
+};
+export function AddTodolistAC(title: string): AddTodolistActionType {
+  return {
+    type: "ADD-TODOLIST",
+    title, // вместо title:title можно использовать просто title
+  };
+};
+export function ChangeFilterTodolistAC(id: string, filter:FilterType): ChangeFilterTodolistActionType {
+  return {
+    type: "CHANGE-FILTER-TODOLIST",
+    id, // вместо id:id можно использовать просто id
+    filter,// вместо filter:filter можно использовать просто filter
+  };
+};
+export function ChangeTitleTodolistAC(title: string, id:string): ChangeTitleTodolistActionType {
+  return {
+    type: "CHANGE-TITLE-TODOLIST",
+    id,
+    title, // вместо id:id можно использовать просто id
+  };
+};
+
