@@ -46,7 +46,7 @@ export function todolistReducer(
       if (todolistFSingle) {
         todolistFSingle.filter = action.filter;
       }
-      return [...todolists]
+      return [...todolists];
     case "CHANGE-TITLE-TODOLIST":
       const todolistSingle = todolists.find((tl) => tl.id === action.id);
       if (todolistSingle) {
