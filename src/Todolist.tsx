@@ -23,8 +23,6 @@ type TodolistPropsType = {
     changeTaskStatus: (taskId: string, newIsDone: boolean, todolistID: string) => void
     changeTaskTitle: (id: string, newTitle: string, todolistID: string) => void
     changeTodolistTitle: (newTitle: string, todolistID: string) => void
-
-
 }
 
 export function Todolist(props: TodolistPropsType) {

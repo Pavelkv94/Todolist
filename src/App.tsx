@@ -5,12 +5,12 @@ import { AddItemForm } from './AddItemForm';
 import './App.css';
 import { FilterType, Todolist, TaskType } from './Todolist';
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterType
 }
-type TaskStateType = {
+export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 
@@ -41,7 +41,7 @@ function App() {
 
     })
 
-
+    //TODO Функции тасок
     //Delete tasks
     function removeTask(taskID: string, todolistID: string) {
         const todolistTasks = tasks[todolistID]; //ищем в каком тудулисте таска
@@ -76,8 +76,10 @@ function App() {
             setTasks({ ...tasks })
         }
     }
+
+    //TODO Функции тудулистов
     //Filter tasks on buttons
-    function changeFilter(value: FilterType, todolistID: string) {
+    function changeFilterTodolist(value: FilterType, todolistID: string) {
         const todolistSingle = todoLists.find(tl => tl.id === todolistID)//ищем нужный тудулист
         if (todolistSingle) { todolistSingle.filter = value }
         setTodolists([...todoLists])
@@ -93,6 +95,18 @@ function App() {
         setTodolists(todoLists.filter(tl => tl.id !== todolistID))
         delete tasks[todolistID]
     }
+    //add Todolists
+    function addTodolist(title: string) {
+        let todolist: TodolistType = {
+            id: v1(),
+            title: title,
+            filter: "all"
+        }
+        setTodolists([todolist, ...todoLists]);
+        setTasks({ ...tasks, [todolist.id]: [] })
+    }
+
+    //UI
     const TodolistComponents = todoLists.map(tl => {
         let tasksForTodolist = tasks[tl.id];
         if (tl.filter === "active") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false); }
@@ -106,7 +120,7 @@ function App() {
                         title={tl.title}
                         tasks={tasksForTodolist}
                         removeTask={removeTask}
-                        changeFilter={changeFilter}
+                        changeFilter={changeFilterTodolist}
                         addTasks={addTask}
                         changeTaskStatus={changeStatus}
                         filter={tl.filter}
@@ -119,15 +133,6 @@ function App() {
         )
     })
 
-    function addTodolist(title: string) {
-        let todolist: TodolistType = {
-            id: v1(),
-            title: title,
-            filter: "all"
-        }
-        setTodolists([todolist, ...todoLists]);
-        setTasks({ ...tasks, [todolist.id]: [] })
-    }
     return (
         <div className="App">
             <Container fixed>
