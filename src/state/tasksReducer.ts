@@ -53,3 +53,35 @@ export function tasksReducer(tasks: TaskStateType, action: ActionTypeTwo): TaskS
       return tasks;
   }
 }
+
+//TODO CREATE ACTION CREATORs
+export function RemoveTasksAC(taskID: string, todolistID: string): RemoveTaskActionType {
+  return {
+    type: "REMOVE-TASK",
+    taskID,
+    todolistID,
+  };
+}
+export function AddTaskAC(title: string, todolistID: string): AddTaskActionType {
+  return {
+    type: "ADD-TASK",
+    title,
+    todolistID,
+  };
+}
+export function ChangeStatusTaskAC(taskID: string, newIsDone: boolean, todolistID: string): ChangeStatusTaskActionType {
+  return {
+    type: "CHANGE-STATUS-TASK",
+    taskID,
+    newIsDone,
+    todolistID,
+  };
+}
+export function ChangeTitleTaskAC(taskID: string, newTitle: string, todolistID: string): ChangeTaskTitleActionType {
+  return {
+    type: "CHANGE-TASK-TITLE",
+    taskID,
+    newTitle,
+    todolistID,
+  };
+}
