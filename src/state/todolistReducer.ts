@@ -38,12 +38,14 @@ export function todolistReducer(todolists: Array<TodolistType>, action: ActionTy
     case "CHANGE-FILTER-TODOLIST":
       const todolistFSingle = todolists.find((tl) => tl.id === action.id);
       if (todolistFSingle) {
+        // если нашёлся - изменим ему заголовок
         todolistFSingle.filter = action.filter;
       }
       return [...todolists];
     case "CHANGE-TITLE-TODOLIST":
       const todolistSingle = todolists.find((tl) => tl.id === action.id);
       if (todolistSingle) {
+        // если нашёлся - изменим ему заголовок
         todolistSingle.title = action.title;
       }
       return [...todolists];

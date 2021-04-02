@@ -12,9 +12,7 @@ test('correct todolist should be removed', () => {
        {id: todolistId1, title: "What to learn", filter: "all"},
        {id: todolistId2, title: "What to buy", filter: "all"}
    ]
-
    const endState = todolistReducer(startState, RemoveTodolistAC(todolistId1))
-
    expect(endState.length).toBe(1);
    expect(endState[0].id).toBe(todolistId2);
 });

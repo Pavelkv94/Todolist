@@ -54,7 +54,7 @@ function App() {
         let newTask = { id: v1(), title: title, isDone: false }; // новая таска
         const todolistTasks = tasks[todolistID];//ищем в каком тудулисте таска
         tasks[todolistID] = [newTask, ...todolistTasks]
-        setTasks({ ...tasks })
+        setTasks({ ...tasks})
     }
     //Change checkbox
     function changeStatus(id: string, newIsDone: boolean, todolistID: string) {
