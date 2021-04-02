@@ -1,7 +1,14 @@
 import { v1 } from "uuid";
 import { TaskStateType } from "../App";
+import { AddTodolistActionType, RemoveTodolistActionType } from "./todolistReducer";
 
-type ActionTypeTwo = RemoveTaskActionType | AddTaskActionType | ChangeStatusTaskActionType | ChangeTaskTitleActionType;
+type ActionTypeTwo =
+  | AddTaskActionType
+  | ChangeStatusTaskActionType
+  | ChangeTaskTitleActionType
+  | AddTodolistActionType
+  | RemoveTodolistActionType
+  | RemoveTaskActionType;
 type RemoveTaskActionType = {
   type: "REMOVE-TASK";
   taskID: string;
@@ -28,33 +35,43 @@ type ChangeTaskTitleActionType = {
 export function tasksReducer(tasks: TaskStateType, action: ActionTypeTwo): TaskStateType { //tasks === state
   const tasksCopy = { ...tasks }
   switch (action.type) {
-    case "REMOVE-TASK":
+    case "REMOVE-TASK": {
       tasksCopy[action.todolistID] = tasksCopy[action.todolistID].filter(t => t.id !== action.taskID)
       return tasksCopy;
-
-    case "ADD-TASK":
+    }
+    case "ADD-TASK": {
       let newTask = { id: v1(), title: action.title, isDone: false };
-      tasksCopy[action.todolistID] = [newTask, ...tasks[action.todolistID]]; 
+      tasksCopy[action.todolistID] = [newTask, ...tasks[action.todolistID]];
       return tasksCopy;   // {...state, [action.todolistID]: [newTask, ...tasks[action.todolistID]]}
-
-    case "CHANGE-STATUS-TASK":{
+    }
+    case "CHANGE-STATUS-TASK": {
       const todolistTasks = tasksCopy[action.todolistID];
       const task = todolistTasks.find(t => t.id === action.taskID);
       if (task) { task.isDone = action.newIsDone }    //return {...tasks, [action.todolistID]: tasks[action.todolistID].map(t=>{if (t.id === action.taskID) {return {...t, isDone:action.newIsDone}} else {return t}})}
       return tasksCopy
-    
-    
     }
-      
 
-    case "CHANGE-TASK-TITLE":{
+    case "CHANGE-TASK-TITLE": {
       const todolistTasks = tasksCopy[action.todolistID];
       const task = todolistTasks.find(t => t.id === action.taskID);
       if (task) {
         task.title = action.newTitle;
-      return tasksCopy} 
+        return tasksCopy
+      }
 
-      
+
+    }
+
+    //при добалении нового тудулиста в массив тудулистов добавляем новый пустой массив в ассоциативный массив тасок с ключом
+    case "ADD-TODOLIST":
+      //let todolistId = v1(); - Два раза создаем ключ, здесь и в todolistReducer, для этого создаем общий ключ в экшерКреаторе AddTodolistAC
+      // return {...tasks, [todolistId]: []}
+      return { ...tasks, [action.todolistID]: [] }
+
+    //при удалении тудулиста удаляется и массив тасок
+    case "REMOVE-TODOLIST": {
+      delete tasksCopy[action.id]
+      return tasksCopy
     }
     default:
       return tasks;

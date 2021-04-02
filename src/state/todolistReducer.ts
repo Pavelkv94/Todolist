@@ -2,7 +2,7 @@ import { TodolistType } from "./../App";
 import { v1 } from "uuid";
 import { FilterType } from "../Todolist";
 
-export type ActionTypeOne = | RemoveTodolistActionType | AddTodolistActionType | ChangeFilterTodolistActionType
+export type ActionTypeOne = RemoveTodolistActionType | AddTodolistActionType | ChangeFilterTodolistActionType
   | ChangeTitleTodolistActionType;
 
 export type RemoveTodolistActionType = {
@@ -12,6 +12,7 @@ export type RemoveTodolistActionType = {
 export type AddTodolistActionType = {
   type: "ADD-TODOLIST";
   title: string;
+  todolistID:string
 };
 export type ChangeFilterTodolistActionType = {
   type: "CHANGE-FILTER-TODOLIST";
@@ -30,7 +31,7 @@ export function todolistReducer(todolists: Array<TodolistType>, action: ActionTy
       return todolists.filter((tl) => tl.id !== action.id);
     case "ADD-TODOLIST":
       let todolist: TodolistType = {
-        id: v1(),
+        id: action.todolistID,
         title: action.title,
         filter: "all",
       };
@@ -66,6 +67,7 @@ export function AddTodolistAC(title: string): AddTodolistActionType {
   return {
     type: "ADD-TODOLIST",
     title, // вместо title:title можно использовать просто title
+    todolistID: v1()
   };
 }
 export function ChangeFilterTodolistAC(id: string, filter: FilterType): ChangeFilterTodolistActionType {
