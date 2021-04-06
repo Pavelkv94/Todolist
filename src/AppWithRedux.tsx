@@ -1,12 +1,12 @@
 import { AppBar, Container, Grid, Paper, Toolbar } from '@material-ui/core';
-import React, { useReducer } from 'react';
-import { useDispatch } from 'react-redux';
-import { v1 } from 'uuid';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddItemForm } from './AddItemForm';
 import './App.css';
-import { AddTaskAC, ChangeStatusTaskAC, ChangeTitleTaskAC, RemoveTasksAC, tasksReducer } from './state/tasksReducer';
-import { AddTodolistAC, ChangeFilterTodolistAC, ChangeTitleTodolistAC, RemoveTodolistAC, todoListID1, todoListID2, todolistReducer } from './state/todolistReducer';
+import { AddTaskAC, ChangeStatusTaskAC, ChangeTitleTaskAC, RemoveTasksAC } from './state/tasksReducer';
+import { AddTodolistAC, ChangeFilterTodolistAC, ChangeTitleTodolistAC, RemoveTodolistAC } from './state/todolistReducer';
 import { FilterType, Todolist, TaskType } from './Todolist';
+import { AppRootState } from './state/store'
 
 export type TodolistType = {
     id: string
@@ -19,32 +19,9 @@ export type TaskStateType = {
 
 function AppWithReducers() {
     //BLL
-
     const dispatch = useDispatch();
-
-    const [todoLists, dispatchTodolistsReducer] = useReducer(todolistReducer,
-        [
-            { id: todoListID1, title: "What to learn", filter: "all" },
-            { id: todoListID2, title: "What to buy", filter: "all" },
-        ]
-    )
-    let [tasks] = useReducer(tasksReducer,
-        {
-            [todoListID1]: [
-                { id: v1(), title: "HTML&CSS", isDone: true },
-                { id: v1(), title: "JS", isDone: true },
-                { id: v1(), title: "React", isDone: false },
-                { id: v1(), title: "Git", isDone: false },
-                { id: v1(), title: "SCSS", isDone: false }
-            ],
-            [todoListID2]: [
-                { id: v1(), title: "Milk", isDone: false },
-                { id: v1(), title: "Bread", isDone: true },
-                { id: v1(), title: "EGGS", isDone: false },
-                { id: v1(), title: "Meat", isDone: false },
-            ],
-
-        })
+    const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists);
+    const tasks = useSelector<AppRootState, TaskStateType>(state => state.tasks);
 
     //TODO Функции тасок
     //Delete tasks
@@ -83,17 +60,17 @@ function AppWithReducers() {
     function removeTodolist(todolistID: string) {
         const action = RemoveTodolistAC(todolistID);
         dispatch(action);
-        dispatchTodolistsReducer(action);
+        dispatch(action);
     }
     //add Todolists
     function addTodolist(title: string) {
         const action = AddTodolistAC(title);
         dispatch(action);
-        dispatchTodolistsReducer(action);
+        dispatch(action);
     }
 
     //UI
-    const TodolistComponents = todoLists.map(tl => {
+    const TodolistComponents = todolists.map(tl => {
         let tasksForTodolist = tasks[tl.id];
         if (tl.filter === "active") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false); }
         if (tl.filter === "complete") { tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true); }
