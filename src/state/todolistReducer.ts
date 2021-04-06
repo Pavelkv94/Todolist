@@ -24,8 +24,13 @@ export type ChangeTitleTodolistActionType = {
   id: string;
   title: string;
 };
-
-export function todolistReducer(todolists: Array<TodolistType>, action: ActionTypeOne): Array<TodolistType> {
+export const todoListID1 = v1();
+export const todoListID2 = v1();
+const initialState:Array<TodolistType> = [
+  { id: todoListID1, title: "What to learn", filter: "all" },
+  { id: todoListID2, title: "What to buy", filter: "all" },
+];
+export function todolistReducer(todolists: Array<TodolistType> = initialState, action: ActionTypeOne): Array<TodolistType> {
   switch (action.type) {
     case "REMOVE-TODOLIST":
       return todolists.filter((tl) => tl.id !== action.id);
@@ -35,7 +40,7 @@ export function todolistReducer(todolists: Array<TodolistType>, action: ActionTy
         title: action.title,
         filter: "all",
       };
-      return [...todolists, todolist];
+      return [todolist, ...todolists];
     case "CHANGE-FILTER-TODOLIST":
       const todolistFSingle = todolists.find((tl) => tl.id === action.id);
       if (todolistFSingle) {

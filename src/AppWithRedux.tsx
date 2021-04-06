@@ -1,10 +1,10 @@
 import { AppBar, Container, Grid, Paper, Toolbar } from '@material-ui/core';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import { v1 } from 'uuid';
 import { AddItemForm } from './AddItemForm';
 import './App.css';
 import { AddTaskAC, ChangeStatusTaskAC, ChangeTitleTaskAC, RemoveTasksAC, tasksReducer } from './state/tasksReducer';
-import { AddTodolistAC, ChangeFilterTodolistAC, ChangeTitleTodolistAC, RemoveTodolistAC, todolistReducer } from './state/todolistReducer';
+import { AddTodolistAC, ChangeFilterTodolistAC, ChangeTitleTodolistAC, RemoveTodolistAC, todoListID1, todoListID2, todolistReducer } from './state/todolistReducer';
 import { FilterType, Todolist, TaskType } from './Todolist';
 
 export type TodolistType = {
@@ -16,10 +16,8 @@ export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 
-function AppWithRedux() {
+function AppWithReducers() {
     //BLL
-    const todoListID1 = v1();
-    const todoListID2 = v1();
     const [todoLists, dispatchTodolistsReducer] = useReducer(todolistReducer,
         [
             { id: todoListID1, title: "What to learn", filter: "all" },
@@ -88,7 +86,7 @@ function AppWithRedux() {
         const action = AddTodolistAC(title);
         dispatchToTasksReducer(action);
         dispatchTodolistsReducer(action);
-        }
+    }
 
     //UI
     const TodolistComponents = todoLists.map(tl => {
@@ -138,4 +136,4 @@ function AppWithRedux() {
     );
 }
 
-export default AppWithRedux;
+export default AppWithReducers;
