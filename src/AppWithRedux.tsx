@@ -1,5 +1,6 @@
 import { AppBar, Container, Grid, Paper, Toolbar } from '@material-ui/core';
 import React, { useReducer } from 'react';
+import { useDispatch } from 'react-redux';
 import { v1 } from 'uuid';
 import { AddItemForm } from './AddItemForm';
 import './App.css';
@@ -18,13 +19,16 @@ export type TaskStateType = {
 
 function AppWithReducers() {
     //BLL
+
+    const dispatch = useDispatch();
+
     const [todoLists, dispatchTodolistsReducer] = useReducer(todolistReducer,
         [
             { id: todoListID1, title: "What to learn", filter: "all" },
             { id: todoListID2, title: "What to buy", filter: "all" },
         ]
     )
-    let [tasks, dispatchToTasksReducer] = useReducer(tasksReducer,
+    let [tasks] = useReducer(tasksReducer,
         {
             [todoListID1]: [
                 { id: v1(), title: "HTML&CSS", isDone: true },
@@ -46,45 +50,45 @@ function AppWithReducers() {
     //Delete tasks
     function removeTask(taskID: string, todolistID: string) {
         const action = RemoveTasksAC(taskID, todolistID);
-        dispatchToTasksReducer(action);
+        dispatch(action);
     }
     //Add tasks from input
     function addTask(title: string, todolistID: string) {
         const action = AddTaskAC(title, todolistID);
-        dispatchToTasksReducer(action);
+        dispatch(action);
     }
     //Change checkbox
     function changeStatus(id: string, newIsDone: boolean, todolistID: string) {
         const action = ChangeStatusTaskAC(id, newIsDone, todolistID)
-        dispatchToTasksReducer(action);
+        dispatch(action);
     }
     //Change text in tasks
     function changeTaskTitle(id: string, newTitle: string, todolistID: string) {
         const action = ChangeTitleTaskAC(id, newTitle, todolistID);
-        dispatchToTasksReducer(action);
+        dispatch(action);
     }
 
     //TODO Функции тудулистов
     //Filter tasks on buttons
     function changeFilterTodolist(value: FilterType, todolistID: string) {
         const action = ChangeFilterTodolistAC(todolistID, value);
-        dispatchTodolistsReducer(action);
+        dispatch(action);
     }
     //Change text in title for todolist
     function changeTodolistTitle(newTitle: string, todolistID: string) {
         const action = ChangeTitleTodolistAC(newTitle, todolistID);
-        dispatchTodolistsReducer(action);
+        dispatch(action);
     }
     //Delete Todolist
     function removeTodolist(todolistID: string) {
         const action = RemoveTodolistAC(todolistID);
-        dispatchToTasksReducer(action);
+        dispatch(action);
         dispatchTodolistsReducer(action);
     }
     //add Todolists
     function addTodolist(title: string) {
         const action = AddTodolistAC(title);
-        dispatchToTasksReducer(action);
+        dispatch(action);
         dispatchTodolistsReducer(action);
     }
 
