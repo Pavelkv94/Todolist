@@ -25,7 +25,8 @@ type TodolistPropsType = {
     changeTodolistTitle: (newTitle: string, todolistID: string) => void
 }
 
-export function Todolist(props: TodolistPropsType) {
+export const Todolist = React.memo((props: TodolistPropsType) => {
+    console.log("Todolist render")
     const setAllFilter = () => { props.changeFilter("all", props.id) };
     const setActiveFilter = () => { props.changeFilter("active", props.id) };
     const setCompleteFilter = () => { props.changeFilter("complete", props.id) };
@@ -67,5 +68,5 @@ export function Todolist(props: TodolistPropsType) {
             </div>
         </div>
     )
-}
+})
 
