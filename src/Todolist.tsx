@@ -1,6 +1,6 @@
 import { Button, Checkbox, IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { AddItemForm } from './AddItemForm';
 import { EditableSpan } from './EditabelSpan';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
@@ -48,7 +48,7 @@ export function Todolist(props: TodolistPropsType) {
         }
     )
     const removeTodolist = () => { props.removeTodolist(props.id) };
-    const addTask = (title: string) => { props.addTasks(title, props.id) };
+    const addTask = useCallback((title: string) => { props.addTasks(title, props.id) }, []);
     const changeTodolistTitle = (title: string) => { props.changeTodolistTitle(title, props.id) };
     return (
         <div>

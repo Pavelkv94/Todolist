@@ -1,5 +1,5 @@
 import { AppBar, Container, Grid, Paper, Toolbar } from '@material-ui/core';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddItemForm } from './AddItemForm';
 import './App.css';
@@ -25,49 +25,47 @@ function AppWithReducers() {
 
     //TODO Функции тасок
     //Delete tasks
-    function removeTask(taskID: string, todolistID: string) {
+    const removeTask = useCallback((taskID: string, todolistID: string) => {
         const action = RemoveTasksAC(taskID, todolistID);
         dispatch(action);
-    }
+    }, [])
     //Add tasks from input
-    function addTask(title: string, todolistID: string) {
+    const addTask = useCallback((title: string, todolistID: string) => {
         const action = AddTaskAC(title, todolistID);
         dispatch(action);
-    }
+    }, [])
     //Change checkbox
-    function changeStatus(id: string, newIsDone: boolean, todolistID: string) {
+    const changeStatus = useCallback((id: string, newIsDone: boolean, todolistID: string) => {
         const action = ChangeStatusTaskAC(id, newIsDone, todolistID)
         dispatch(action);
-    }
+    }, [])
     //Change text in tasks
-    function changeTaskTitle(id: string, newTitle: string, todolistID: string) {
+    const changeTaskTitle = useCallback((id: string, newTitle: string, todolistID: string) => {
         const action = ChangeTitleTaskAC(id, newTitle, todolistID);
         dispatch(action);
-    }
+    }, [])
 
     //TODO Функции тудулистов
     //Filter tasks on buttons
-    function changeFilterTodolist(value: FilterType, todolistID: string) {
+    const changeFilterTodolist = useCallback((value: FilterType, todolistID: string) => {
         const action = ChangeFilterTodolistAC(todolistID, value);
         dispatch(action);
-    }
+    }, [])
     //Change text in title for todolist
-    function changeTodolistTitle(newTitle: string, todolistID: string) {
+    const changeTodolistTitle = useCallback((newTitle: string, todolistID: string) => {
         const action = ChangeTitleTodolistAC(newTitle, todolistID);
         dispatch(action);
-    }
+    }, [])
     //Delete Todolist
-    function removeTodolist(todolistID: string) {
+    const removeTodolist = useCallback((todolistID: string) => {
         const action = RemoveTodolistAC(todolistID);
         dispatch(action);
-        dispatch(action);
-    }
+    }, [])
     //add Todolists
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         const action = AddTodolistAC(title);
         dispatch(action);
-        dispatch(action);
-    }
+    }, [])
 
     //UI
     const TodolistComponents = todolists.map(tl => {
