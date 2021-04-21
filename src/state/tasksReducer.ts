@@ -32,19 +32,19 @@ type ChangeTaskTitleActionType = {
   todolistID: string;
 };
 
-const initialState:TaskStateType = {
+const initialState: TaskStateType = {
   [todoListID1]: [
-      { id: v1(), title: "HTML&CSS", isDone: true },
-      { id: v1(), title: "JS", isDone: true },
-      { id: v1(), title: "React", isDone: false },
-      { id: v1(), title: "Git", isDone: false },
-      { id: v1(), title: "SCSS", isDone: false }
+    { id: v1(), title: "HTML&CSS", isDone: true },
+    { id: v1(), title: "JS", isDone: true },
+    { id: v1(), title: "React", isDone: false },
+    { id: v1(), title: "Git", isDone: false },
+    { id: v1(), title: "SCSS", isDone: false }
   ],
   [todoListID2]: [
-      { id: v1(), title: "Milk", isDone: false },
-      { id: v1(), title: "Bread", isDone: true },
-      { id: v1(), title: "EGGS", isDone: false },
-      { id: v1(), title: "Meat", isDone: false },
+    { id: v1(), title: "Milk", isDone: false },
+    { id: v1(), title: "Bread", isDone: true },
+    { id: v1(), title: "EGGS", isDone: false },
+    { id: v1(), title: "Meat", isDone: false },
   ],
 
 }
@@ -62,22 +62,31 @@ export function tasksReducer(tasks: TaskStateType = initialState, action: Action
       return tasksCopy;   // {...state, [action.todolistID]: [newTask, ...tasks[action.todolistID]]}
     }
     case "CHANGE-STATUS-TASK": {
-      const todolistTasks = tasksCopy[action.todolistID];
-      const task = todolistTasks.find(t => t.id === action.taskID);
-      if (task) { task.isDone = action.newIsDone }    //return {...tasks, [action.todolistID]: tasks[action.todolistID].map(t=>{if (t.id === action.taskID) {return {...t, isDone:action.newIsDone}} else {return t}})}
-      return tasksCopy
+      // const todolistTasks = tasksCopy[action.todolistID];
+      // const task = todolistTasks.find(t => t.id === action.taskID);
+      // if (task) { task.isDone = action.newIsDone }    tasks[action.todolistID] = [...todolistTasks]
+      // return tasksCopy
+      return { ...tasks, [action.todolistID]: tasks[action.todolistID].map(t => { if (t.id === action.taskID) { return { ...t, isDone: action.newIsDone } } else { return t } }) }
+
     }
 
     case "CHANGE-TASK-TITLE": {
-      const todolistTasks = tasksCopy[action.todolistID];
-      const task = todolistTasks.find(t => t.id === action.taskID);
-      if (task) {
-        task.title = action.newTitle;
-        return tasksCopy
+      // const todolistTasks = tasksCopy[action.todolistID];
+      // const task = todolistTasks.find(t => t.id === action.taskID);
+      // if (task) {
+      //   task.title = action.newTitle;
+      //   return tasksCopy
+      // }
+      return {
+        ...tasks,
+        [action.todolistID]: tasks[action.todolistID]
+          .map(task => task.id === action.taskID
+            ? { ...task, title: action.newTitle }
+            : task)
       }
-
-
     }
+
+
 
     //при добалении нового тудулиста в массив тудулистов добавляем новый пустой массив в ассоциативный массив тасок с ключом
     case "ADD-TODOLIST":

@@ -1,5 +1,5 @@
 import { AppBar, Container, Grid, Paper, Toolbar } from '@material-ui/core';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import { v1 } from 'uuid';
 import { AddItemForm } from './AddItemForm';
 import './App.css';
@@ -88,7 +88,7 @@ function AppWithRedux() {
         const action = AddTodolistAC(title);
         dispatchToTasksReducer(action);
         dispatchTodolistsReducer(action);
-        }
+    }
 
     //UI
     const TodolistComponents = todoLists.map(tl => {

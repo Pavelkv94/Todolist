@@ -19,9 +19,6 @@ beforeEach(() => {
   };
 });
 
-
-
-
 //todo tests for default functions taskReducer
 test("correct tasks should be removed", () => {
  
