@@ -38,6 +38,6 @@ TaskIsDoneExample.args = {
 export const TaskIsNotDoneExample = Template.bind({});
 TaskIsNotDoneExample.args = {
     ...argsBase,
-    task: { id: '2', isDone: false, title: 'HTML' },
-    todolistId: '2'
+    task: { id: '1', isDone: false, title: 'JS' },
+    todolistId: '1'
 };

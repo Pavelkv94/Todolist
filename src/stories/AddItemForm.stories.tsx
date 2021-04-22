@@ -7,7 +7,7 @@ import { AddItemForm, AddItemFormPropsType } from "../AddItemForm";
 import { action } from "@storybook/addon-actions";
 
 export default {
-  title: 'Toodolists/AddItemForm',
+  title: 'Todolists/AddItemForm',
   component: AddItemForm,
 
 } as Meta;
