@@ -33,19 +33,19 @@ type ChangeTaskTitleActionType = {
 };
 
 const initialState: TaskStateType = {
-  [todoListID1]: [
-    { id: v1(), title: "HTML&CSS", isDone: true },
-    { id: v1(), title: "JS", isDone: true },
-    { id: v1(), title: "React", isDone: false },
-    { id: v1(), title: "Git", isDone: false },
-    { id: v1(), title: "SCSS", isDone: false }
-  ],
-  [todoListID2]: [
-    { id: v1(), title: "Milk", isDone: false },
-    { id: v1(), title: "Bread", isDone: true },
-    { id: v1(), title: "EGGS", isDone: false },
-    { id: v1(), title: "Meat", isDone: false },
-  ],
+  // [todoListID1]: [
+  //   { id: v1(), title: "HTML&CSS", isDone: true },
+  //   { id: v1(), title: "JS", isDone: true },
+  //   { id: v1(), title: "React", isDone: false },
+  //   { id: v1(), title: "Git", isDone: false },
+  //   { id: v1(), title: "SCSS", isDone: false }
+  // ],
+  // [todoListID2]: [
+  //   { id: v1(), title: "Milk", isDone: false },
+  //   { id: v1(), title: "Bread", isDone: true },
+  //   { id: v1(), title: "EGGS", isDone: false },
+  //   { id: v1(), title: "Meat", isDone: false },
+  // ],
 
 }
 
