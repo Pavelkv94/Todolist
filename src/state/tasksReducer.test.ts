@@ -1,8 +1,9 @@
-import { TaskStateType } from "./../App";
-import { RemoveTasksAC, AddTaskAC, tasksReducer, ChangeStatusTaskAC, ChangeTitleTaskAC } from "./tasksReducer";
-import { AddTodolistAC, RemoveTodolistAC } from "./todolistReducer";
 
-let startState: TaskStateType;
+import { TasksStateType } from "../App";
+import { removeTaskAC, addTaskAC, tasksReducer, changeTaskStatusAC, changeTaskTitleAC } from "./tasks-reducer";
+import { addTodolistAC, removeTodolistAC } from "./todolists-reducer";
+
+let startState: TasksStateType;
 
 beforeEach(() => {
   startState = {
@@ -23,7 +24,7 @@ beforeEach(() => {
 test("correct tasks should be removed", () => {
  
 
-  const action = RemoveTasksAC("2", "todolistId2");
+  const action = removeTaskAC("2", "todolistId2");
 
   const endState = tasksReducer(startState, action)
 
@@ -44,7 +45,7 @@ test("correct tasks should be removed", () => {
 
 test("correct tasks should be ADD", () => {
  
-  const action = AddTaskAC("juce", "todolistId2");
+  const action = addTaskAC("juce", "todolistId2");
 
   const endState = tasksReducer(startState, action)
 
@@ -58,7 +59,7 @@ test("correct tasks should be ADD", () => {
 
 test("correct tasks should be Change Status", () => {
 
-  const action = ChangeStatusTaskAC("2", false, "todolistId1");
+  const action = changeTaskStatusAC("2", false, "todolistId1");
 
   const endState = tasksReducer(startState, action);
 
@@ -68,7 +69,7 @@ test("correct tasks should be Change Status", () => {
 });
 
 test("correct tasks should be Change Task Title", () => {
-  const startState: TaskStateType = {
+  const startState: TasksStateType = {
     "todoListID1": [
       { id: "1", title: "HTML&CSS", isDone: true },
       { id: "2", title: "JS", isDone: true },
@@ -82,7 +83,7 @@ test("correct tasks should be Change Task Title", () => {
       { id: "4", title: "Meat", isDone: false },
     ],
   };
-  const action = ChangeTitleTaskAC("2", "QWEQWE", "todoListID1");
+  const action = changeTaskTitleAC("2", "QWEQWE", "todoListID1");
 
   const endState = tasksReducer(startState, action);
 
@@ -95,7 +96,7 @@ test("correct tasks should be Change Task Title", () => {
 //todo новый массив должен добавляться в наш ассоциативный массив
 test('new array should be added when new todolist is added', () => {
  
-  const action = AddTodolistAC("new todolist");
+  const action = addTodolistAC("new todolist");
 
   const endState = tasksReducer(startState, action)
   //после того как отработает создание нвоого тудулиста у нас должен появится третий массив(в ассоциативном), который будет пустым []
@@ -115,7 +116,7 @@ test('new array should be added when new todolist is added', () => {
 //todo проверка что с тудулистом мы и таски тоже удаляем
 test('property with todolistId should be deleted', () => {
  
-  const action = RemoveTodolistAC("todolistId2");
+  const action = removeTodolistAC("todolistId2");
 
   const endState = tasksReducer(startState, action)
 
