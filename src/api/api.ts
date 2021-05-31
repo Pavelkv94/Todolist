@@ -40,21 +40,21 @@ export const todolistAPI = {
 
 export const tasksAPI = {
 
-    getTask() {
-        const promise = instatnce.get(`todo-lists`)
+    getTask(todolistId: string) {
+        const promise = instatnce.get(`todo-lists/${todolistId}/tasks`)
         return promise
     },
-    createTask(title: string) {
-        const promise = instatnce.post('todo-lists', { title: title })
+    createTask(todolistId: string, title: string) {
+        const promise = instatnce.post(`todo-lists/${todolistId}/tasks`, { title: title })
         return promise
     },
-    deleteTask(todolistId: string) {
-        const promise = instatnce.delete(`todo-lists/${todolistId}`)
+    deleteTask(todolistId: string, taskId: string) {
+        const promise = instatnce.delete(`todo-lists/${todolistId}/tasks/${taskId}`)
         return promise
 
     },
-    updateTask(todolistId: string, title: string) {
-        const promise = instatnce.put(`todo-lists/${todolistId}`, { title: title })
+    updateTask(todolistId: string, taskId: string, title: string) {
+        const promise = instatnce.put(`todo-lists/${todolistId}/tasks/${taskId}`, { title: title })
         return promise
     },
 
