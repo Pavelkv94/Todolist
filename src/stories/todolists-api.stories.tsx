@@ -8,8 +8,9 @@ export default {
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-       todolistAPI.getTodo()
+        todolistAPI.getTodo()
             .then((res) => {
+                debugger
                 setState(res.data);
             })
     }, [])
@@ -30,7 +31,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-      todolistAPI.deleteTodo("").then((res) => {
+        todolistAPI.deleteTodo("").then((res) => {
             setState(res.data);
         })
 
@@ -42,7 +43,7 @@ export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todolistId = "";
-        todolistAPI.updateTodolist("","REACT>>>>>>>>>")
+        todolistAPI.updateTodolist("", "REACT>>>>>>>>>")
             .then((res) => {
                 setState(res.data)
             })

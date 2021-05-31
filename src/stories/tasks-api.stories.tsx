@@ -15,6 +15,7 @@ export const GetTasks = () => {
         tasksAPI.getTask(todolistId)
             .then((res) => {
                 setState(res.data);
+                console.log(res)
             })
     }, [])
     return <div> {JSON.stringify(state)}</div>
