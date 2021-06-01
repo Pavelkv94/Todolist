@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import './App.css';
-import { TaskType, Todolist } from './Todolist';
+import { Todolist } from './Todolist';
 import { AddItemForm } from './AddItemForm';
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
@@ -16,7 +16,7 @@ import {
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from './state/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import { todolistAPI } from './api/api';
+import { TaskType, todolistAPI } from './api/api';
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -34,12 +34,12 @@ export type TasksStateType = {
 function App() {
 
     useEffect(() => {
-dispatch(setTodosThunk)
+        dispatch(setTodosThunk)
 
-    // /    todolistAPI.getTodo().then((res) => {
-    //         let todos = res.data;
-    //         dispatch(setTodosAC(todos))
-    //     })
+        // /    todolistAPI.getTodo().then((res) => {
+        //         let todos = res.data;
+        //         dispatch(setTodosAC(todos))
+        //     })
     }, []
     )
 

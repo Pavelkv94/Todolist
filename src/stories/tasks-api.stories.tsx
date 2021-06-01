@@ -4,7 +4,7 @@ import { tasksAPI } from '../api/api'
 export default {
     title: 'TASKS-API'
 }
-const todolistId = "d50fa9a9-437b-470a-a83b-d5134d35a0b9";
+const todolistId = "8f2dee38-7c1c-4181-9117-8594adc994a4";
 const taskId = "29f49cda-31a5-4893-b15a-d6a92cbd45e4";
 
 //task example
@@ -32,7 +32,7 @@ export const GetTasks = () => {
 export const CreateTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        tasksAPI.createTask(todolistId, "Two task").then((res) => {
+        tasksAPI.createTask(todolistId, "white").then((res) => {
             setState(res.data);
         })
 
