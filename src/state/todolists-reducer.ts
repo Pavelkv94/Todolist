@@ -102,13 +102,12 @@ export const setTodosAC = (todos: Array<TodolistType>) => {
 export type SetTodosActionType = ReturnType<typeof setTodosAC>
 
 //todo THUNK CREATORS
-export const setTodosThunk = (dispatch: Dispatch, getState: any) => {
+export const setTodosTC = () => (dispatch: Dispatch) => {
     // 1. Side Effect
-    
     todolistAPI.getTodo()
-    .then(res=>{
-        let todos = res.data
-        // 2. Dispatch actions(thunk)
-        dispatch(setTodosAC(todos))
-    })
+        .then(res => {
+            let todos = res.data
+            // 2. Dispatch actions(thunk)
+            dispatch(setTodosAC(todos))
+        })
 }
