@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import './App.css';
 import { Todolist } from './Todolist';
 import { AddItemForm } from './AddItemForm';
@@ -12,10 +12,10 @@ import {
     setTodosTC,
     TodolistDomainType
 } from './state/todolists-reducer';
-import { addTaskAC, addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, removeTasksTC } from './state/tasks-reducer';
+import { addTaskAC, addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, removeTasksTC, updateTaskStatusTC } from './state/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import { TaskType, todolistAPI } from './api/api';
+import { TaskStatuses, TaskType, todolistAPI } from './api/api';
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -55,9 +55,9 @@ function App() {
         dispatch(addTaskTC(todolistId, title))
     }, []);
 
-    const changeStatus = useCallback(function (id: string, isDone: boolean, todolistId: string) {
-        const action = changeTaskStatusAC(id, isDone, todolistId);
-        dispatch(action);
+    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
+        const action = changeTaskStatusAC(id, status, todolistId);
+        dispatch(updateTaskStatusTC(todolistId, id, status));
     }, []);
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
