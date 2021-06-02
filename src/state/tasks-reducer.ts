@@ -176,6 +176,7 @@ export const addTaskTC = (todolistId: string, taskTitile: string) => (dispatch: 
 }
 
 export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    
     //обращаемся к стейту
     let state = getState();
     //получаем массив тасок
@@ -184,11 +185,27 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
     let tasksForCurrentTodolist = allTasks[todolistId]
     //находим конкретную таску у которой меняем статус
     let findTask = tasksForCurrentTodolist.find(t => t.id === taskId);
-    const newTask = { ...findTask, status: status }
-    const model = newTask;
-    tasksAPI.updateTask(todolistId, taskId, model as UpdateTaskModelType)
-        .then((res) => {
-            let updateTask = res.data.data.item.status
-            dispatch(changeTaskStatusAC(taskId, updateTask, todolistId))
-        })
+    //todo первый способ: передаюттся лишние строки на сервер
+    //const newTask = { ...findTask, status: status }
+    //const model = newTask;
+
+//todo для того чтобы не передавать лишие строки на сервер делаем так:
+//условие обязательно
+    if (findTask) {
+        const model: UpdateTaskModelType = {
+            title: findTask.title,
+            status: status,
+            startDate: findTask.startDate,
+            priority: findTask.priority,
+            description: findTask.description,
+            deadline: findTask.deadline
+        }
+
+        tasksAPI.updateTask(todolistId, taskId, model as UpdateTaskModelType)
+            .then((res) => {
+                let updateTask = res.data.data.item.status
+                dispatch(changeTaskStatusAC(taskId, updateTask, todolistId))
+            })
+    }
+
 }
