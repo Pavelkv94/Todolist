@@ -111,3 +111,13 @@ export const setTodosTC = () => (dispatch: Dispatch) => {
             dispatch(setTodosAC(todos))
         })
 }
+
+export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
+    todolistAPI.createTodo(title)
+        .then((res) => {
+            let newTodo = res.data.data.item.title
+            dispatch(addTodolistAC(newTodo))
+            console.log(res)
+        })
+}
+

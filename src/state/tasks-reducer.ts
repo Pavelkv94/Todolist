@@ -176,7 +176,7 @@ export const addTaskTC = (todolistId: string, taskTitile: string) => (dispatch: 
 }
 
 export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
-    
+
     //обращаемся к стейту
     let state = getState();
     //получаем массив тасок
@@ -189,8 +189,8 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
     //const newTask = { ...findTask, status: status }
     //const model = newTask;
 
-//todo для того чтобы не передавать лишие строки на сервер делаем так:
-//условие обязательно
+    //todo для того чтобы не передавать лишие строки на сервер делаем так:
+    //условие обязательно
     if (findTask) {
         const model: UpdateTaskModelType = {
             title: findTask.title,

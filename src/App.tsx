@@ -6,6 +6,7 @@ import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography
 import { Menu } from '@material-ui/icons';
 import {
     addTodolistAC,
+    addTodosTC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
@@ -82,8 +83,8 @@ function App() {
     }, []);
 
     const addTodolist = useCallback((title: string) => {
-        const action = addTodolistAC(title);
-        dispatch(action);
+        // const action = addTodolistAC(title);
+        dispatch(addTodosTC(title));
     }, [dispatch]);
 
     return (
