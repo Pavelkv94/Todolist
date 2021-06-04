@@ -9,6 +9,7 @@ import {
     addTodosTC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
+    changeTodosTitleTC,
     removeTodolistAC,
     removeTodosTC,
     setTodosTC,
@@ -58,7 +59,7 @@ function App() {
     }, []);
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
-        const action = changeTaskStatusAC(id, status, todolistId);
+        // const action = changeTaskStatusAC(id, status, todolistId);
         dispatch(updateTaskStatusTC(todolistId, id, status));
     }, []);
 
@@ -79,8 +80,8 @@ function App() {
     }, []);
 
     const changeTodolistTitle = useCallback(function (id: string, title: string) {
-        const action = changeTodolistTitleAC(id, title);
-        dispatch(action);
+        //const action = changeTodolistTitleAC(id, title);
+        dispatch(changeTodosTitleTC(id, title));
     }, []);
 
     const addTodolist = useCallback((title: string) => {
