@@ -133,5 +133,4 @@ export const changeTodosTitleTC = (todolistId: string, title: string) => (dispat
         .then((res) => {
             dispatch(changeTodolistTitleAC(todolistId, title))
         })
-
 }
