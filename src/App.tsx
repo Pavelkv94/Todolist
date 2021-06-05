@@ -60,12 +60,11 @@ function App() {
     }, []);
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
-        // const action = changeTaskStatusAC(id, status, todolistId);
         dispatch(updateTaskStatusTC(todolistId, id, status));
     }, []);
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-        // const action = changeTaskTitleAC(id, newTitle, todolistId);
+
         dispatch(changeTaskTitleTC(todolistId, id, newTitle));
     }, []);
 
@@ -76,17 +75,14 @@ function App() {
     }, []);
 
     const removeTodolist = useCallback(function (id: string) {
-        //const action = removeTodolistAC(id);
         dispatch(removeTodosTC(id));
     }, []);
 
     const changeTodolistTitle = useCallback(function (id: string, title: string) {
-        //const action = changeTodolistTitleAC(id, title);
         dispatch(changeTodosTitleTC(id, title));
     }, []);
 
     const addTodolist = useCallback((title: string) => {
-        // const action = addTodolistAC(title);
         dispatch(addTodosTC(title));
     }, [dispatch]);
 
