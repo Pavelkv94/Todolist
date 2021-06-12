@@ -4,6 +4,7 @@ import { AddTodolistActionType, RemoveTodolistActionType, SetTodosActionType } f
 import { TasksStateType } from '../App';
 import { Dispatch } from 'redux';
 import { tasksAPI, TaskType } from '../api/api';
+import { setAppStatusAC } from './app-reducer';
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -150,28 +151,35 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string): SetTasks
 
 //todo THUNK CREATORS
 export const fetchTasksTC = (todolistId: string) => {
+
     return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         tasksAPI.getTasks(todolistId)
             .then((res) => {
                 const tasks = res.data.items
                 const action = setTasksAC(tasks, todolistId)
                 dispatch(action)
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 }
 
 export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     tasksAPI.deleteTask(todolistId, taskId)
         .then((res) => {
             dispatch(removeTaskAC(taskId, todolistId))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 
 export const addTaskTC = (todolistId: string, taskTitile: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     tasksAPI.createTask(todolistId, taskTitile)
         .then((res) => {
             let newTask = res.data.data.item;
             dispatch(addTaskAC(newTask))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 
@@ -211,6 +219,7 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
 }
 
 export const changeTaskTitleTC = (todolistId: string, taskId: string, title: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    dispatch(setAppStatusAC('loading'))
     let findTask = getState().tasks[todolistId].find(t => t.id === taskId);
     if (findTask) {
         const model: UpdateTaskModelType = {
@@ -226,6 +235,7 @@ export const changeTaskTitleTC = (todolistId: string, taskId: string, title: str
             .then((res) => {
                 let title = res.data.data.item.title
                 dispatch(changeTaskTitleAC(taskId, title, todolistId))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 }

@@ -2,24 +2,22 @@ import { useCallback, useEffect } from 'react'
 import './App.css';
 import { Todolist } from './Todolist';
 import { AddItemForm } from './AddItemForm';
-import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import {
-    addTodolistAC,
     addTodosTC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
     changeTodosTitleTC,
-    removeTodolistAC,
     removeTodosTC,
     setTodosTC,
     TodolistDomainType
 } from './state/todolists-reducer';
-import { addTaskAC, addTaskTC, changeTaskStatusAC, changeTaskTitleAC, changeTaskTitleTC, removeTaskAC, removeTasksTC, updateTaskStatusTC } from './state/tasks-reducer';
+import { addTaskTC, changeTaskTitleTC, removeTasksTC, updateTaskStatusTC } from './state/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import { TaskStatuses, TaskType, todolistAPI } from './api/api';
-import { title } from 'process';
+import { TaskStatuses, TaskType, } from './api/api';
+import { RequestStatusType } from './state/app-reducer';
+
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -48,6 +46,8 @@ function App() {
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+
     const dispatch = useDispatch();
 
     //todo TASKS FUNCTION
@@ -99,6 +99,9 @@ function App() {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
+
+            {status === 'loading' && <LinearProgress color="secondary" />}
+
             <Container fixed>
                 <Grid container style={{ padding: "20px" }}>
                     <AddItemForm addItem={addTodolist} />
