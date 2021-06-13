@@ -2,7 +2,7 @@ import { todolistAPI } from './../api/api';
 import { Dispatch } from 'redux';
 import { v1 } from 'uuid';
 import { FilterValuesType, TodolistType } from '../App';
-import { setAppStatusAC } from './app-reducer';
+import { setAppStatusAC, SetAppStatusType } from './app-reducer';
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -30,6 +30,7 @@ type ActionsType =
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
     | SetTodosActionType
+    | SetAppStatusType
 
 const initialState: Array<TodolistDomainType> = [
     /*{id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},

@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import './App.css';
 import { Todolist } from './Todolist';
-import { AddItemForm } from './AddItemForm';
+import { AddItemForm } from './components/AddItemForm/AddItemForm';
 import { AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import {
@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
 import { TaskStatuses, TaskType, } from './api/api';
 import { RequestStatusType } from './state/app-reducer';
+import { ErrorSnackbar } from './components/ErrorSnackbar/ErrorSnackbar';
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -88,6 +89,7 @@ function App() {
 
     return (
         <div className="App">
+            <ErrorSnackbar />
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
