@@ -4,7 +4,7 @@ import { AddTodolistActionType, RemoveTodolistActionType, SetTodosActionType } f
 import { TasksStateType } from '../App';
 import { Dispatch } from 'redux';
 import { tasksAPI, TaskType } from '../api/api';
-import { setAppErrorAC, setAppStatusAC, SetAppStatusType } from './app-reducer';
+import { setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer';
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -39,6 +39,7 @@ type ActionsType = RemoveTaskActionType | AddTaskActionType
     | SetTodosActionType
     | SetTasksActionType
     | SetAppStatusType
+    | SetAppErrorType
 
 const initialState: TasksStateType = {
 
