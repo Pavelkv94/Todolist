@@ -143,11 +143,17 @@ export const setTodosTC = () => (dispatch: Dispatch) => {
         })
 }
 
+enum StatuseesCode {
+    successs = 0,
+    failed = 1,
+    captcha = 10
+}
+
 export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     todolistAPI.createTodo(title)
         .then((res) => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === StatuseesCode.successs) {
                 let newTodo = res.data.data.item.title
                 dispatch(addTodolistAC(newTodo))
             } else {
