@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { v1 } from 'uuid';
 import { FilterValuesType, TodolistType } from '../App';
 import { RequestStatusType, setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer';
+import { AxiosError } from 'axios';
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -154,6 +155,9 @@ export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
                 dispatch(setAppErrorAC(res.data.messages[0]))
                 dispatch(setAppStatusAC('failed'))
             }
+        }).catch((err: AxiosError) => {
+            dispatch(setAppErrorAC(err.message));
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 

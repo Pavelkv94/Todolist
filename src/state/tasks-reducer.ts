@@ -5,6 +5,7 @@ import { TasksStateType } from '../App';
 import { Dispatch } from 'redux';
 import { tasksAPI, TaskType } from '../api/api';
 import { setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer';
+import { AxiosError } from 'axios';
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -168,7 +169,7 @@ export const fetchTasksTC = (todolistId: string) => {
 
 export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    
+
     tasksAPI.deleteTask(todolistId, taskId)
         .then((res) => {
             dispatch(removeTaskAC(taskId, todolistId))
@@ -188,7 +189,9 @@ export const addTaskTC = (todolistId: string, taskTitile: string) => (dispatch: 
                 dispatch(setAppErrorAC(res.data.messages[0]))
                 dispatch(setAppStatusAC('failed'))
             }
-
+        }).catch((err: AxiosError) => {
+            dispatch(setAppErrorAC(err.message));
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 
