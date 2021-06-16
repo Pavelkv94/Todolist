@@ -155,16 +155,15 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string): SetTasks
 
 //todo THUNK CREATORS
 export const fetchTasksTC = (todolistId: string) => {
-
     return (dispatch: Dispatch) => {
         dispatch(setAppStatusAC('loading'))
         tasksAPI.getTasks(todolistId)
             .then((res) => {
                 const tasks = res.data.items
-                const action = setTasksAC(tasks, todolistId)
-                dispatch(action)
+                dispatch(setTasksAC(tasks, todolistId))
                 dispatch(setAppStatusAC('succeeded'))
-            }).catch((err: AxiosError) => {
+            })
+            .catch((err: AxiosError) => {
                 handleServerNetworkError(dispatch, err.message)
             })
     }
