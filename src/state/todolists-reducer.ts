@@ -4,6 +4,7 @@ import { v1 } from 'uuid';
 import { FilterValuesType, TodolistType } from '../App';
 import { RequestStatusType, setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer';
 import { AxiosError } from 'axios';
+import { handleServerNetworkError } from '../utils/error-utils';
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -156,13 +157,15 @@ export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
             if (res.data.resultCode === StatuseesCode.successs) {
                 let newTodo = res.data.data.item.title
                 dispatch(addTodolistAC(newTodo))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
                 dispatch(setAppErrorAC(res.data.messages[0]))
+                dispatch(setAppStatusAC('failed'))
             }
         }).catch((err: AxiosError) => {
-            dispatch(setAppErrorAC(err.message));
-        }).finally(() => {
-            dispatch(setAppStatusAC('succeeded'))
+            handleServerNetworkError(dispatch, err.message)
+            // dispatch(setAppErrorAC(err.message));
+            // dispatch(setAppStatusAC('succeeded'))
         })
 }
 
