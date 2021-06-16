@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import { tasksAPI, TaskType } from '../api/api';
 import { setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer';
 import { AxiosError } from 'axios';
+import { handleServerNetworkError } from '../utils/error-utils';
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -177,20 +178,29 @@ export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: 
         })
 }
 
+enum StatuseesCode {
+    successs = 0,
+    failed = 1,
+    captcha = 10
+}
+
 export const addTaskTC = (todolistId: string, taskTitile: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     tasksAPI.createTask(todolistId, taskTitile)
         .then((res) => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === StatuseesCode.successs) {
                 let newTask = res.data.data.item;
                 dispatch(addTaskAC(newTask))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
-                dispatch(setAppErrorAC(res.data.messages[0]))
+                handleServerNetworkError(dispatch, res.data.messages[0])
+                // dispatch(setAppErrorAC(res.data.messages[0]))
+                // dispatch(setAppStatusAC('failed'))
             }
         }).catch((err: AxiosError) => {
-            dispatch(setAppErrorAC(err.message));
-        }).finally(() => {
-            dispatch(setAppStatusAC('succeeded'))
+            handleServerNetworkError(dispatch, err.message)
+            // dispatch(setAppErrorAC(err.message));
+            // dispatch(setAppStatusAC('succeeded'))
         })
 }
 

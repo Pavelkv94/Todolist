@@ -159,8 +159,9 @@ export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
                 dispatch(addTodolistAC(newTodo))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
-                dispatch(setAppErrorAC(res.data.messages[0]))
-                dispatch(setAppStatusAC('failed'))
+                handleServerNetworkError(dispatch, res.data.messages[0])
+                // dispatch(setAppErrorAC(res.data.messages[0]))
+                // dispatch(setAppStatusAC('failed'))
             }
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
