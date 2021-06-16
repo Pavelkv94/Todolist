@@ -164,6 +164,8 @@ export const fetchTasksTC = (todolistId: string) => {
                 const action = setTasksAC(tasks, todolistId)
                 dispatch(action)
                 dispatch(setAppStatusAC('succeeded'))
+            }).catch((err: AxiosError) => {
+                handleServerNetworkError(dispatch, err.message)
             })
     }
 }
@@ -175,6 +177,8 @@ export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: 
         .then((res) => {
             dispatch(removeTaskAC(taskId, todolistId))
             dispatch(setAppStatusAC('succeeded'))
+        }).catch((err: AxiosError) => {
+            handleServerNetworkError(dispatch, err.message)
         })
 }
 
@@ -234,6 +238,8 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
             .then((res) => {
                 let updateTask = res.data.data.item.status
                 dispatch(changeTaskStatusAC(taskId, updateTask, todolistId))
+            }).catch((err: AxiosError) => {
+                handleServerNetworkError(dispatch, err.message)
             })
     }
 
@@ -257,6 +263,8 @@ export const changeTaskTitleTC = (todolistId: string, taskId: string, title: str
                 let title = res.data.data.item.title
                 dispatch(changeTaskTitleAC(taskId, title, todolistId))
                 dispatch(setAppStatusAC('succeeded'))
+            }).catch((err: AxiosError) => {
+                handleServerNetworkError(dispatch, err.message)
             })
     }
 }

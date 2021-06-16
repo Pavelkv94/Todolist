@@ -141,6 +141,8 @@ export const setTodosTC = () => (dispatch: Dispatch) => {
             // 2. Dispatch actions(thunk)
             dispatch(setTodosAC(todos))
             dispatch(setAppStatusAC('succeeded'))
+        }).catch((err: AxiosError) => {
+            handleServerNetworkError(dispatch, err.message)
         })
 }
 
@@ -177,7 +179,8 @@ export const removeTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
         .then((res) => {
             dispatch(removeTodolistAC(todolistId))
             dispatch(setAppStatusAC('succeeded'))
-
+        }).catch((err: AxiosError) => {
+            handleServerNetworkError(dispatch, err.message)
         })
 }
 
@@ -187,6 +190,8 @@ export const changeTodosTitleTC = (todolistId: string, title: string) => (dispat
         .then((res) => {
             dispatch(changeTodolistTitleAC(todolistId, title))
             dispatch(setAppStatusAC('succeeded'))
+        }).catch((err: AxiosError) => {
+            handleServerNetworkError(dispatch, err.message)
         })
 }
 
