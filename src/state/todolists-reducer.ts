@@ -150,13 +150,12 @@ export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
             if (res.data.resultCode === 0) {
                 let newTodo = res.data.data.item.title
                 dispatch(addTodolistAC(newTodo))
-                dispatch(setAppStatusAC('succeeded'))
             } else {
                 dispatch(setAppErrorAC(res.data.messages[0]))
-                dispatch(setAppStatusAC('failed'))
             }
         }).catch((err: AxiosError) => {
             dispatch(setAppErrorAC(err.message));
+        }).finally(() => {
             dispatch(setAppStatusAC('succeeded'))
         })
 }
