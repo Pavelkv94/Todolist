@@ -3,8 +3,6 @@ import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextFiel
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginTC } from '../../state/auth-reducer';
-import { useEffect } from 'react';
-import { setAppStatusAC } from '../../state/app-reducer';
 import { AppRootStateType } from '../../state/store';
 import { Redirect } from 'react-router-dom';
 
