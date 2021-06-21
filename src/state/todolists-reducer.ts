@@ -7,21 +7,21 @@ import { AxiosError } from 'axios';
 import { handleServerNetworkError } from '../utils/error-utils';
 
 export type RemoveTodolistActionType = {
-    type: 'REMOVE-TODOLIST',
+    type: 'todolists/REMOVE-TODOLIST',
     id: string
 }
 export type AddTodolistActionType = {
-    type: 'ADD-TODOLIST',
+    type: 'todolists/ADD-TODOLIST',
     title: string
     todolistId: string
 }
 export type ChangeTodolistTitleActionType = {
-    type: 'CHANGE-TODOLIST-TITLE',
+    type: 'todolists/CHANGE-TODOLIST-TITLE',
     id: string
     title: string
 }
 export type ChangeTodolistFilterActionType = {
-    type: 'CHANGE-TODOLIST-FILTER',
+    type: 'todolists/CHANGE-TODOLIST-FILTER',
     id: string
     filter: FilterValuesType
 }
@@ -48,15 +48,15 @@ export type TodolistDomainType = TodolistType & {
 }
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
-        case 'SET-TODOS': {
+        case 'todolists/SET-TODOS': {
             return action.todos.map((tl) => {
                 return { ...tl, filter: 'all', entityStatus: 'idle' }
             })
         }
-        case 'REMOVE-TODOLIST': {
+        case 'todolists/REMOVE-TODOLIST': {
             return state.filter(tl => tl.id !== action.id)
         }
-        case 'ADD-TODOLIST': {
+        case 'todolists/ADD-TODOLIST': {
             return [{
                 id: action.todolistId,
                 title: action.title,
@@ -66,7 +66,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
                 entityStatus: 'idle'
             }, ...state]
         }
-        case 'CHANGE-TODOLIST-TITLE': {
+        case 'todolists/CHANGE-TODOLIST-TITLE': {
             const todolist = state.find(tl => tl.id === action.id);
             if (todolist) {
                 // если нашёлся - изменим ему заголовок
@@ -74,7 +74,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             }
             return [...state]
         }
-        case 'CHANGE-TODOLIST-FILTER': {
+        case 'todolists/CHANGE-TODOLIST-FILTER': {
             const todolist = state.find(tl => tl.id === action.id);
             if (todolist) {
                 // если нашёлся - изменим ему заголовок
@@ -82,7 +82,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             }
             return [...state]
         }
-        case 'CHANGE-TODOLIST-ENTITY-STATUS': {
+        case 'todolists/CHANGE-TODOLIST-ENTITY-STATUS': {
             const todolist = state.find(tl => tl.id === action.id);
             if (todolist) {
                 todolist.entityStatus = action.entityStatus;
@@ -100,29 +100,29 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 
 //todo ACTION CREATORS
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
-    return { type: 'REMOVE-TODOLIST', id: todolistId }
+    return { type: 'todolists/REMOVE-TODOLIST', id: todolistId }
 }
 export const addTodolistAC = (title: string): AddTodolistActionType => {
-    return { type: 'ADD-TODOLIST', title: title, todolistId: v1() }
+    return { type: 'todolists/ADD-TODOLIST', title: title, todolistId: v1() }
 }
 export const changeTodolistTitleAC = (id: string, title: string): ChangeTodolistTitleActionType => {
-    return { type: 'CHANGE-TODOLIST-TITLE', id: id, title: title }
+    return { type: 'todolists/CHANGE-TODOLIST-TITLE', id: id, title: title }
 }
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType): ChangeTodolistFilterActionType => {
-    return { type: 'CHANGE-TODOLIST-FILTER', id: id, filter: filter }
+    return { type: 'todolists/CHANGE-TODOLIST-FILTER', id: id, filter: filter }
 }
 
 
 export const setTodosAC = (todos: Array<TodolistType>) => {
     return {
-        type: 'SET-TODOS',
+        type: 'todolists/SET-TODOS',
         todos
     } as const
 }
 
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) => {
     return {
-        type: 'CHANGE-TODOLIST-ENTITY-STATUS',
+        type: 'todolists/CHANGE-TODOLIST-ENTITY-STATUS',
         id,
         entityStatus
     } as const
