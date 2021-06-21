@@ -22,6 +22,11 @@ export const Login = () => {
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
+            if (!values.password) {
+                errors.password = 'Password is required';
+            } else if (values.password.length < 6) {
+                errors.password = 'Invalid password (minimal 6 sybmols)';
+            }
             return errors;
         },
         onSubmit: values => {
@@ -44,13 +49,13 @@ export const Login = () => {
                         <p>Email: free@samuraijs.com</p>
                         <p>Password: free</p>
                     </FormLabel>
-
                     <FormGroup>
                         <TextField
                             label="Email"
                             margin="normal"
                             name="email"
                             onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             value={formik.values.email}
                         />
                         {formik.errors.email ? <div style={{ color: 'red' }}>{formik.errors.email}</div> : null}
@@ -58,10 +63,12 @@ export const Login = () => {
                             type="password"
                             label="Password"
                             margin="normal"
+                            onBlur={formik.handleBlur}
                             name="password"
                             onChange={formik.handleChange}
                             value={formik.values.password}
                         />
+                        {formik.errors.password ? <div style={{ color: 'red' }}>{formik.errors.password}</div> : null}
                         <FormControlLabel
                             label={'Remember me'}
                             control={<Checkbox
