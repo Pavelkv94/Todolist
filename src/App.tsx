@@ -10,6 +10,7 @@ import { Login } from './features/Login/Login';
 import { TodolistsList } from './TodolistsList';
 import { TaskType } from './api/api';
 import { useEffect } from 'react';
+import { logoutTC } from './state/auth-reducer';
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -32,6 +33,7 @@ type PropsType = {
 function App({ demo = false }: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -39,6 +41,9 @@ function App({ demo = false }: PropsType) {
         
     }, [])
 
+    const logoutHandler =()=>{
+        dispatch(logoutTC())
+    }
     if (!isInitialized) {
         return <div
             style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
@@ -59,7 +64,8 @@ function App({ demo = false }: PropsType) {
                         <Typography variant="h6">
                             Todolist
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        {isLoggedIn&& <Button color="inherit" onClick={logoutHandler}>Logout</Button> }
+                        
                     </Toolbar>
                 </AppBar>
 
