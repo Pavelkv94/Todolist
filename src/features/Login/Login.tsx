@@ -2,6 +2,11 @@ import React from 'react'
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid } from '@material-ui/core'
 import { useFormik } from 'formik';
 
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
 export const Login = () => {
 
     const formik = useFormik({
@@ -10,11 +15,19 @@ export const Login = () => {
             password: '',
             rememberMe: false
         },
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            return errors;
+        },
         onSubmit: values => {
             alert(JSON.stringify(values));
         },
     })
-
 
 
     return <Grid container justify="center">
@@ -31,6 +44,7 @@ export const Login = () => {
                         <p>Email: free@samuraijs.com</p>
                         <p>Password: free</p>
                     </FormLabel>
+
                     <FormGroup>
                         <TextField
                             label="Email"
@@ -39,6 +53,7 @@ export const Login = () => {
                             onChange={formik.handleChange}
                             value={formik.values.email}
                         />
+                        {formik.errors.email ? <div style={{ color: 'red' }}>{formik.errors.email}</div> : null}
                         <TextField
                             type="password"
                             label="Password"
@@ -52,7 +67,7 @@ export const Login = () => {
                             control={<Checkbox
                                 name="rememberMe"
                                 onChange={formik.handleChange}
-                                value={formik.values.rememberMe}
+                                checked={formik.values.rememberMe}
                             />}
 
                         />
