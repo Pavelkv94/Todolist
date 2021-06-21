@@ -13,9 +13,7 @@ type FormikErrorType = {
 }
 export const Login = () => {
     const dispatch = useDispatch();
-    // useEffect(() =>
-    //     dispatch(setAppStatusAC('succeeded')), []
-    // )
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -37,8 +35,7 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            alert(JSON.stringify(values));
-            dispatch(loginTC({ email: values.email, password: values.password, rememberMe: values.rememberMe }));
+            dispatch(loginTC(values));
             formik.resetForm();
         },
     })
