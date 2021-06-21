@@ -9,7 +9,7 @@ import { AppRootStateType } from "./state/store"
 import { addTaskTC, changeTaskTitleTC, removeTasksTC, updateTaskStatusTC } from "./state/tasks-reducer"
 import { addTodosTC, changeTodolistFilterAC, changeTodosTitleTC, removeTodosTC, setTodosTC, TodolistDomainType } from "./state/todolists-reducer"
 import { Todolist } from "./Todolist"
-
+//* demo - проверка для сторибука
 type PropsType = {
     demo?: boolean
 }
@@ -17,7 +17,7 @@ type PropsType = {
 export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn);
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return;
         }
         const thunk = setTodosTC()

@@ -1,3 +1,7 @@
+import { Dispatch } from "redux"
+import { authAPI } from "../api/api"
+import { setIsLoggedInAC } from "./auth-reducer"
+
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
@@ -36,6 +40,17 @@ export const setAppErrorAC = (error: string | null) => {
         error
     } as const
 }
+
+export const initializeAppTC = () => (dispatch: Dispatch) => {
+    authAPI.me().then(res => {
+        if (res.data.resultCode === StatuseesCode.successs) {
+            dispatch(setIsLoggedInAC(true));
+        } else {
+            dispatch(setIsLoggedInAC(false));
+        }
+    })
+}
+
 export type SetAppErrorType = ReturnType<typeof setAppErrorAC>
 export type SetAppStatusType = ReturnType<typeof setAppStatusAC>
 type ActionsType = SetAppStatusType | SetAppErrorType

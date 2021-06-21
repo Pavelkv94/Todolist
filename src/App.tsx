@@ -1,14 +1,15 @@
 import './App.css';
 import { AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import { RequestStatusType } from './state/app-reducer';
+import { initializeAppTC, RequestStatusType } from './state/app-reducer';
 import { ErrorSnackbar } from './components/ErrorSnackbar/ErrorSnackbar';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Login } from './features/Login/Login';
 import { TodolistsList } from './TodolistsList';
 import { TaskType } from './api/api';
+import { useEffect } from 'react';
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -23,13 +24,18 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
+//* demo - проверка для сторибука
 type PropsType = {
     demo?: boolean
 }
 
 function App({ demo = false }: PropsType) {
-
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    }, [])
 
     return (
         <div className="App">
@@ -41,7 +47,7 @@ function App({ demo = false }: PropsType) {
                             <Menu />
                         </IconButton>
                         <Typography variant="h6">
-                           Todolist
+                            Todolist
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>

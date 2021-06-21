@@ -103,6 +103,8 @@ export const tasksAPI = {
 export const authAPI = {
     login(data: LoginParamsType) {
         return instance.post<ResponseType<{ userId: number }>>('auth/login', data);
+    },
+    me() {
+        return instance.get<any>('auth/me')
     }
-
 }
