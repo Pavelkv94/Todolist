@@ -12,7 +12,7 @@ import { Todolist } from "./Todolist"
 //* demo - проверка для сторибука
 type PropsType = {
     demo?: boolean
-}
+};
 
 export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn);
@@ -22,10 +22,10 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
         }
         const thunk = setTodosTC()
         dispatch(thunk)
-    }, [])
+    }, []);
 
-    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks);
 
     const dispatch = useDispatch();
 
@@ -100,4 +100,4 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
             </Grid>
         </>
     }
-}
+};

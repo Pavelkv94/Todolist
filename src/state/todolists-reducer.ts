@@ -2,29 +2,33 @@ import { todolistAPI } from './../api/api';
 import { Dispatch } from 'redux';
 import { v1 } from 'uuid';
 import { FilterValuesType, TodolistType } from '../App';
-import { RequestStatusType, setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from './app-reducer';
+import { RequestStatusType, SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from './app-reducer';
 import { AxiosError } from 'axios';
 import { handleServerNetworkError } from '../utils/error-utils';
 
 export type RemoveTodolistActionType = {
     type: 'todolists/REMOVE-TODOLIST',
     id: string
-}
+};
+
 export type AddTodolistActionType = {
     type: 'todolists/ADD-TODOLIST',
     title: string
     todolistId: string
-}
+};
+
 export type ChangeTodolistTitleActionType = {
     type: 'todolists/CHANGE-TODOLIST-TITLE',
     id: string
     title: string
-}
+};
+
 export type ChangeTodolistFilterActionType = {
     type: 'todolists/CHANGE-TODOLIST-FILTER',
     id: string
     filter: FilterValuesType
-}
+};
+
 export type SetTodosActionType = ReturnType<typeof setTodosAC>
 
 export type ChangeTodolistEntityStatusType = ReturnType<typeof changeTodolistEntityStatusAC>
@@ -36,16 +40,18 @@ type ActionsType =
     | SetTodosActionType
     | SetAppStatusType
     | SetAppErrorType
-    | ChangeTodolistEntityStatusType
+    | ChangeTodolistEntityStatusType;
 
 const initialState: Array<TodolistDomainType> = [
     /*{id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
    {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0}*/
-]
+];
+
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
     entityStatus: RequestStatusType
-}
+};
+
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
         case 'todolists/SET-TODOS': {
@@ -96,29 +102,28 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
         default:
             return state;
     }
-}
+};
 
 //todo ACTION CREATORS
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
     return { type: 'todolists/REMOVE-TODOLIST', id: todolistId }
-}
+};
 export const addTodolistAC = (title: string): AddTodolistActionType => {
     return { type: 'todolists/ADD-TODOLIST', title: title, todolistId: v1() }
-}
+};
 export const changeTodolistTitleAC = (id: string, title: string): ChangeTodolistTitleActionType => {
     return { type: 'todolists/CHANGE-TODOLIST-TITLE', id: id, title: title }
-}
+};
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType): ChangeTodolistFilterActionType => {
     return { type: 'todolists/CHANGE-TODOLIST-FILTER', id: id, filter: filter }
-}
-
+};
 
 export const setTodosAC = (todos: Array<TodolistType>) => {
     return {
         type: 'todolists/SET-TODOS',
         todos
     } as const
-}
+};
 
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) => {
     return {
@@ -126,9 +131,7 @@ export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestSt
         id,
         entityStatus
     } as const
-}
-
-
+};
 
 //todo THUNK CREATORS
 export const setTodosTC = () => (dispatch: Dispatch) => {
@@ -144,8 +147,7 @@ export const setTodosTC = () => (dispatch: Dispatch) => {
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
         })
-}
-
+};
 
 export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -157,15 +159,11 @@ export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerNetworkError(dispatch, res.data.messages[0])
-                // dispatch(setAppErrorAC(res.data.messages[0]))
-                // dispatch(setAppStatusAC('failed'))
             }
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
-            // dispatch(setAppErrorAC(err.message));
-            // dispatch(setAppStatusAC('succeeded'))
         })
-}
+};
 
 export const removeTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -177,7 +175,7 @@ export const removeTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
         })
-}
+};
 
 export const changeTodosTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -188,6 +186,6 @@ export const changeTodosTitleTC = (todolistId: string, title: string) => (dispat
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
         })
-}
+};
 
 

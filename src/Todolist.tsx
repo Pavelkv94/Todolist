@@ -9,7 +9,6 @@ import { TaskStatuses, TaskType } from './api/api'
 import { useDispatch } from 'react-redux'
 import { fetchTasksTC } from './state/tasks-reducer'
 import { RequestStatusType } from './state/app-reducer'
-import { setTodosTC } from './state/todolists-reducer'
 
 type PropsType = {
     id: string
@@ -25,44 +24,40 @@ type PropsType = {
     filter: FilterValuesType
     entityStatus: RequestStatusType
 
-}
+};
 
 export const Todolist = React.memo(function (props: PropsType) {
-    console.log('Todolist called')
-
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchTasksTC(props.id))
-       //dispatch(setTodosTC())
-    }, [])
-
-
+        //dispatch(setTodosTC())
+    }, []);
 
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }, [props.addTask, props.id])
+    }, [props.addTask, props.id]);
 
     const removeTodolist = () => {
         props.removeTodolist(props.id)
-    }
+    };
     const changeTodolistTitle = useCallback((title: string) => {
         props.changeTodolistTitle(props.id, title)
-    }, [props.id, props.changeTodolistTitle])
+    }, [props.id, props.changeTodolistTitle]);
 
-    const onAllClickHandler = useCallback(() => props.changeFilter('all', props.id), [props.id, props.changeFilter])
-    const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.id, props.changeFilter])
-    const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.id, props.changeFilter])
+    const onAllClickHandler = useCallback(() => props.changeFilter('all', props.id), [props.id, props.changeFilter]);
+    const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.id, props.changeFilter]);
+    const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.id, props.changeFilter]);
 
 
-    let tasksForTodolist = props.tasks
+    let tasksForTodolist = props.tasks;
 
     if (props.filter === 'active') {
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New)
-    }
+    };
     if (props.filter === 'completed') {
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
-    }
+    };
 
     return <div>
         <h3><EditableSpan value={props.title} onChange={changeTodolistTitle} />
@@ -96,6 +91,6 @@ export const Todolist = React.memo(function (props: PropsType) {
             </Button>
         </div>
     </div >
-})
+});
 
 

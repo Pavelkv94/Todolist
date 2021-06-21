@@ -4,11 +4,11 @@ import { SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from
 import { handleServerNetworkError } from '../utils/error-utils';
 import { AxiosError } from 'axios';
 
-
 const initialState = {
     isLoggedIn: false
-}
-type InitialStateType = typeof initialState
+};
+
+type InitialStateType = typeof initialState;
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -17,10 +17,11 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
         default:
             return state
     }
-}
+};
+
 // actions
 export const setIsLoggedInAC = (value: boolean) =>
-    ({ type: 'login/SET-IS-LOGGED-IN', value } as const)
+    ({ type: 'login/SET-IS-LOGGED-IN', value } as const);
 
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
@@ -37,7 +38,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
         .catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
         })
-}
+};
 
 export const logoutTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -53,10 +54,9 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         .catch((error) => {
             handleServerNetworkError(dispatch, error.messages)
         })
-}
-
+};
 
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusType | SetAppErrorType
+type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusType | SetAppErrorType;
 
 
