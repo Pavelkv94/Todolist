@@ -1,6 +1,10 @@
 import React from 'react'
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid } from '@material-ui/core'
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { loginTC } from '../../state/auth-reducer';
+import { useEffect } from 'react';
+import { setAppStatusAC } from '../../state/app-reducer';
 
 type FormikErrorType = {
     email?: string
@@ -8,7 +12,10 @@ type FormikErrorType = {
     rememberMe?: boolean
 }
 export const Login = () => {
-
+    const dispatch = useDispatch();
+    // useEffect(() =>
+    //     dispatch(setAppStatusAC('succeeded')), []
+    // )
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -24,13 +31,14 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = 'Password is required';
-            } else if (values.password.length < 6) {
-                errors.password = 'Invalid password (minimal 6 sybmols)';
+            } else if (values.password.length < 4) {
+                errors.password = 'Invalid password (minimal 4 sybmols)';
             }
             return errors;
         },
         onSubmit: values => {
             alert(JSON.stringify(values));
+            dispatch(loginTC({ email: values.email, password: values.password, rememberMe: values.rememberMe }));
             formik.resetForm();
         },
     })
