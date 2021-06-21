@@ -2,7 +2,7 @@ import { todolistAPI } from './../api/api';
 import { Dispatch } from 'redux';
 import { v1 } from 'uuid';
 import { FilterValuesType, TodolistType } from '../App';
-import { RequestStatusType, setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer';
+import { RequestStatusType, setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from './app-reducer';
 import { AxiosError } from 'axios';
 import { handleServerNetworkError } from '../utils/error-utils';
 
@@ -146,11 +146,6 @@ export const setTodosTC = () => (dispatch: Dispatch) => {
         })
 }
 
-enum StatuseesCode {
-    successs = 0,
-    failed = 1,
-    captcha = 10
-}
 
 export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))

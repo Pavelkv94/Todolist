@@ -4,7 +4,7 @@ import { AddTodolistActionType, RemoveTodolistActionType, SetTodosActionType } f
 import { TasksStateType } from '../App';
 import { Dispatch } from 'redux';
 import { tasksAPI, TaskType } from '../api/api';
-import { setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer';
+import { setAppErrorAC, SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from './app-reducer';
 import { AxiosError } from 'axios';
 import { handleServerNetworkError } from '../utils/error-utils';
 
@@ -179,12 +179,6 @@ export const removeTasksTC = (todolistId: string, taskId: string) => (dispatch: 
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
         })
-}
-
-enum StatuseesCode {
-    successs = 0,
-    failed = 1,
-    captcha = 10
 }
 
 export const addTaskTC = (todolistId: string, taskTitile: string) => (dispatch: Dispatch) => {

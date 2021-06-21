@@ -1,6 +1,6 @@
 import { authAPI, LoginParamsType } from './../api/api';
 import { Dispatch } from 'redux'
-import { SetAppErrorType, setAppStatusAC, SetAppStatusType } from './app-reducer'
+import { SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from './app-reducer'
 import { handleServerNetworkError } from '../utils/error-utils';
 import { AxiosError } from 'axios';
 
@@ -9,12 +9,6 @@ const initialState = {
     isLoggedIn: false
 }
 type InitialStateType = typeof initialState
-
-enum StatuseesCode {
-    successs = 0,
-    failed = 1,
-    captcha = 10
-}
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {

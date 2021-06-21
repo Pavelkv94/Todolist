@@ -4,6 +4,11 @@ const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as string | null
 }
+export enum StatuseesCode {
+    successs = 0,
+    failed = 1,
+    captcha = 10
+}
 
 type InitialStateType = typeof initialState
 
