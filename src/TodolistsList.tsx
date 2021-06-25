@@ -7,7 +7,7 @@ import { FilterValuesType, TasksStateType } from "./App"
 import { AddItemForm } from "./components/AddItemForm/AddItemForm"
 import { AppRootStateType } from "./state/store"
 import { addTaskTC, changeTaskTitleTC, removeTasksTC, updateTaskStatusTC } from "./state/tasks-reducer"
-import { addTodosTC, changeTodolistFilterAC, changeTodosTitleTC, removeTodosTC, setTodosTC, TodolistDomainType } from "./state/todolists-reducer"
+import { addTodolistTC, changeTodolistFilterAC, changeTodolistTitleTC, removeTodolistTC, setTodolistTC, TodolistDomainType } from "./state/todolists-reducer"
 import { Todolist } from "./Todolist"
 //* demo - проверка для сторибука
 type PropsType = {
@@ -20,7 +20,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
         if (demo || !isLoggedIn) {
             return;
         }
-        const thunk = setTodosTC()
+        const thunk = setTodolistTC()
         dispatch(thunk)
     }, []);
 
@@ -54,15 +54,15 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     }, []);
 
     const removeTodolist = useCallback(function (id: string) {
-        dispatch(removeTodosTC(id));
+        dispatch(removeTodolistTC(id));
     }, []);
 
     const changeTodolistTitle = useCallback(function (id: string, title: string) {
-        dispatch(changeTodosTitleTC(id, title));
+        dispatch(changeTodolistTitleTC(id, title));
     }, []);
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodosTC(title));
+        dispatch(addTodolistTC(title));
     }, [dispatch]);
 
     if (!isLoggedIn) {

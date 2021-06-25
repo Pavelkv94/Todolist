@@ -27,7 +27,7 @@ export type ChangeTodolistFilterActionType = {
     filter: FilterValuesType
 };
 
-export type SetTodosActionType = ReturnType<typeof setTodosAC>
+export type SetTodosActionType = ReturnType<typeof setTodolistAC>
 
 export type ChangeTodolistEntityStatusType = ReturnType<typeof changeTodolistEntityStatusAC>
 type ActionsType =
@@ -112,7 +112,7 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValuesType): Ch
     return { type: 'todolists/CHANGE-TODOLIST-FILTER', id: id, filter: filter }
 };
 
-export const setTodosAC = (todos: Array<TodolistType>) => {
+export const setTodolistAC = (todos: Array<TodolistType>) => {
     return {
         type: 'todolists/SET-TODOS',
         todos
@@ -128,7 +128,7 @@ export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestSt
 };
 
 //todo THUNK CREATORS
-export const setTodosTC = () => (dispatch: Dispatch) => {
+export const setTodolistTC = () => (dispatch: Dispatch) => {
 
     dispatch(setAppStatusAC('loading'))
     // 1. Side Effect
@@ -136,14 +136,14 @@ export const setTodosTC = () => (dispatch: Dispatch) => {
         .then(res => {
             let todos = res.data
             // 2. Dispatch actions(thunk)
-            dispatch(setTodosAC(todos))
+            dispatch(setTodolistAC(todos))
             dispatch(setAppStatusAC('succeeded'))
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
         })
 };
 
-export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
+export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     todolistAPI.createTodo(title)
         .then((res) => {
@@ -159,7 +159,7 @@ export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
         })
 };
 
-export const removeTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
+export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
     todolistAPI.deleteTodo(todolistId)
@@ -171,7 +171,7 @@ export const removeTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
         })
 };
 
-export const changeTodosTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+export const changeTodolistTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     todolistAPI.updateTodolist(todolistId, title)
         .then((res) => {
