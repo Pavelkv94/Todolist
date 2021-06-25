@@ -23,16 +23,19 @@ type PropsType = {
     changeTodolistTitle: (id: string, newTitle: string) => void
     filter: FilterValuesType
     entityStatus: RequestStatusType
-
+    demo?: boolean
 };
 
 export const Todolist = React.memo(function (props: PropsType) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchTasksTC(props.id))
-        //dispatch(setTodosTC())
-    }, []);
+        if (props.demo) {
+            return
+        }
+        const thunk = fetchTasksTC(props.id)
+        dispatch(thunk)
+    }, [])
 
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)

@@ -92,6 +92,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                                     removeTodolist={removeTodolist}
                                     changeTaskTitle={changeTaskTitle}
                                     changeTodolistTitle={changeTodolistTitle}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

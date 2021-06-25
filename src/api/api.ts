@@ -55,6 +55,7 @@ export type LoginParamsType = {
     captcha?: boolean
 };
 
+
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1/",
     withCredentials: true,

@@ -1,6 +1,5 @@
 import { todolistAPI } from './../api/api';
 import { Dispatch } from 'redux';
-import { v1 } from 'uuid';
 import { FilterValuesType, TodolistType } from '../App';
 import { RequestStatusType, SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from './app-reducer';
 import { AxiosError } from 'axios';
@@ -13,8 +12,7 @@ export type RemoveTodolistActionType = {
 
 export type AddTodolistActionType = {
     type: 'todolists/ADD-TODOLIST',
-    title: string
-    todolistId: string
+    todolist: TodolistType
 };
 
 export type ChangeTodolistTitleActionType = {
@@ -63,14 +61,9 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return state.filter(tl => tl.id !== action.id)
         }
         case 'todolists/ADD-TODOLIST': {
-            return [{
-                id: action.todolistId,
-                title: action.title,
-                filter: 'all',
-                addedDate: '',
-                order: 0,
-                entityStatus: 'idle'
-            }, ...state]
+
+            return [{ ...action.todolist, filter: 'all', entityStatus: 'idle' }, ...state]
+
         }
         case 'todolists/CHANGE-TODOLIST-TITLE': {
             const todolist = state.find(tl => tl.id === action.id);
@@ -108,9 +101,10 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
     return { type: 'todolists/REMOVE-TODOLIST', id: todolistId }
 };
-export const addTodolistAC = (title: string): AddTodolistActionType => {
-    return { type: 'todolists/ADD-TODOLIST', title: title, todolistId: v1() }
-};
+export const addTodolistAC = (todolist: TodolistType): AddTodolistActionType => ({ type: 'todolists/ADD-TODOLIST', todolist })
+// export const addTodolistAC = (title: string): AddTodolistActionType => {
+//     return { type: 'todolists/ADD-TODOLIST', title: title, todolistId: v1() }
+// };
 export const changeTodolistTitleAC = (id: string, title: string): ChangeTodolistTitleActionType => {
     return { type: 'todolists/CHANGE-TODOLIST-TITLE', id: id, title: title }
 };
@@ -154,7 +148,7 @@ export const addTodosTC = (title: string) => (dispatch: Dispatch) => {
     todolistAPI.createTodo(title)
         .then((res) => {
             if (res.data.resultCode === StatuseesCode.successs) {
-                let newTodo = res.data.data.item.title
+                let newTodo = res.data.data.item
                 dispatch(addTodolistAC(newTodo))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
