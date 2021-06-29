@@ -9,6 +9,9 @@ import { AppRootStateType } from "./state/store"
 import { addTaskTC, changeTaskTitleTC, removeTasksTC, updateTaskStatusTC } from "./state/tasks-reducer"
 import { addTodolistTC, changeTodolistFilterAC, changeTodolistTitleTC, removeTodolistTC, setTodolistTC, TodolistDomainType } from "./state/todolists-reducer"
 import { Todolist } from "./Todolist"
+import './App.css';
+
+
 //* demo - проверка для сторибука
 type PropsType = {
     demo?: boolean
@@ -77,8 +80,8 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                     todolists.map(tl => {
                         let allTodolistTasks = tasks[tl.id];
 
-                        return <Grid item key={tl.id}>
-                            <Paper style={{ padding: "10px" }}>
+                        return <Grid item key={tl.id} >
+                            <Paper style={{ padding: "15px" }} className="todolist">
                                 <Todolist
                                     id={tl.id}
                                     title={tl.title}

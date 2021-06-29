@@ -11,6 +11,7 @@ import { TodolistsList } from './TodolistsList';
 import { TaskType } from './api/api';
 import { useEffect } from 'react';
 import { logoutTC } from './state/auth-reducer';
+import ParticlesBg from 'particles-bg'
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -53,7 +54,8 @@ function App({ demo = false }: PropsType) {
 
 
     return (
-        <div className="App">
+        <div className="App" style={{position:"relative"}}>
+            <ParticlesBg type="polygon" bg={true} />
             <BrowserRouter>
                 <ErrorSnackbar />
                 <AppBar position="static">
