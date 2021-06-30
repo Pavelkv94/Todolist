@@ -1,6 +1,6 @@
 import { Dispatch } from "redux"
 import { authAPI } from "../api/api"
-import { setIsLoggedInAC } from "./auth-reducer"
+import { slice } from "./auth-reducer"
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
@@ -54,7 +54,7 @@ export const setIsInitializedAC = (isInitialized: boolean) => {
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
         if (res.data.resultCode === StatuseesCode.successs) {
-            dispatch(setIsLoggedInAC(true));
+            dispatch(slice.actions.setIsLoggedInAC({ value: true }));
         } else {
 
         }

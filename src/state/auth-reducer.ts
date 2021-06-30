@@ -3,25 +3,23 @@ import { Dispatch } from 'redux'
 import { SetAppErrorType, setAppStatusAC, SetAppStatusType, StatuseesCode } from './app-reducer'
 import { handleServerNetworkError } from '../utils/error-utils';
 import { AxiosError } from 'axios';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
     isLoggedIn: false
 };
 
-type InitialStateType = typeof initialState;
-
-export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch (action.type) {
-        case 'login/SET-IS-LOGGED-IN':
-            return { ...state, isLoggedIn: action.value }
-        default:
-            return state
+export const slice = createSlice({
+    name: " auth",
+    initialState: initialState,
+    reducers: {
+        setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
+            { state.isLoggedIn = action.payload.value }
+        }
     }
-};
+})
 
-// actions
-export const setIsLoggedInAC = (value: boolean) =>
-    ({ type: 'login/SET-IS-LOGGED-IN', value } as const);
+export const authReducer = slice.reducer;
 
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
@@ -29,7 +27,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
     authAPI.login(data)
         .then(res => {
             if (res.data.resultCode === StatuseesCode.successs) {
-                dispatch(setIsLoggedInAC(true));
+                dispatch(slice.actions.setIsLoggedInAC({ value: true }));
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerNetworkError(dispatch, res.data.messages[0])
@@ -45,7 +43,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     authAPI.logout()
         .then(res => {
             if (res.data.resultCode === StatuseesCode.successs) {
-                dispatch(setIsLoggedInAC(false))
+                dispatch(slice.actions.setIsLoggedInAC({ value: false }))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerNetworkError(dispatch, res.data.messages[0])
@@ -55,8 +53,3 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             handleServerNetworkError(dispatch, error.messages)
         })
 };
-
-// types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusType | SetAppErrorType;
-
-
