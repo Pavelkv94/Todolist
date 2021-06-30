@@ -54,7 +54,7 @@ function App({ demo = false }: PropsType) {
 
 
     return (
-        <div className="App" style={{position:"relative"}}>
+        <div className="App">
             <ParticlesBg type="polygon" bg={true} />
             <BrowserRouter>
                 <ErrorSnackbar />
