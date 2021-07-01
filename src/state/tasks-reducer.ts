@@ -1,7 +1,7 @@
 import { UpdateTaskModelType, TaskStatuses } from './../api/api';
 import { AppRootStateType } from './store';
-import { SetTodosActionType, addTodolistAC, removeTodolistAC, setTodolistAC } from './todolists-reducer';
-import { TasksStateType, TodolistType } from '../App';
+import { addTodolistAC, removeTodolistAC, setTodolistAC } from './todolists-reducer';
+import { TasksStateType } from '../App';
 import { Dispatch } from 'redux';
 import { tasksAPI, TaskType } from '../api/api';
 import { setAppStatusAC, StatuseesCode } from './app-reducer';
@@ -129,13 +129,9 @@ export const addTaskTC = (todolistId: string, taskTitile: string) => (dispatch: 
                 dispatch(setAppStatusAC({ status: 'succeeded' }))
             } else {
                 handleServerNetworkError(dispatch, res.data.messages[0])
-                // dispatch(setAppErrorAC(res.data.messages[0]))
-                // dispatch(setAppStatusAC('failed'))
             }
         }).catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
-            // dispatch(setAppErrorAC(err.message));
-            // dispatch(setAppStatusAC('succeeded'))
         })
 };
 
