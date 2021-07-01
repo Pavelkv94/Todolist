@@ -72,8 +72,9 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
         return <Redirect to={'/login'} />
     } else {
         return <>
-            <Grid container style={{ padding: "20px" }}>
-                <AddItemForm addItem={addTodolist} />
+            <Grid container style={{ padding: "20px", justifyContent: "center" }} > 
+                <div className="mainTitle">Create New Todolist:</div>
+                <AddItemForm addItem={addTodolist} mainItem={true}/>
             </Grid>
             <Grid container spacing={3}>
                 {

@@ -8,6 +8,7 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 type AddItemFormPropsType = {
     addItem: (title: string) => void
     entityStatus?: RequestStatusType
+    mainItem?: boolean
 }
 
 export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
@@ -47,7 +48,7 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
             helperText={error}
             disabled={props.entityStatus === 'loading'}
             size="small"
-
+            style={props.mainItem ? { width: "320px" } : {}}
         />
         <IconButton color="primary" onClick={addItem} disabled={props.entityStatus === 'loading'}>
             <NoteAddIcon />
