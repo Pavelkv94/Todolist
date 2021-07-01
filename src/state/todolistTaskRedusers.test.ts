@@ -1,5 +1,5 @@
 // создаем тест для обоих редьюсеров
-import {  TasksStateType, TodolistType } from "../App";
+import { TasksStateType, TodolistType } from "../App";
 import { tasksReducer } from "./tasks-reducer";
 import { addTodolistAC, todolistsReducer } from "./todolists-reducer";
 
@@ -10,7 +10,7 @@ test('ids should be equals', () => {
     const startTodolistsState: Array<TodolistType> = [];
 
     //вызываем экшенКреатор, который создает экшен 
-    const action = addTodolistAC("new todolist"); //=> {id: 'aaa', title: "new todolist", filter: 'all'}
+    const action = addTodolistAC({ todolistId: "new todolist" }); //=> {id: 'aaa', title: "new todolist", filter: 'all'}
 
     //редьюсеры создадут новые обьекты с ключами
     const endTasksState = tasksReducer(startTasksState, action)
