@@ -39,10 +39,10 @@ function App({ demo = false }: PropsType) {
 
     useEffect(() => {
         dispatch(initializeAppTC())
-        
+
     }, []);
 
-    const logoutHandler =()=>{
+    const logoutHandler = () => {
         dispatch(logoutTC())
     };
     if (!isInitialized) {
@@ -66,8 +66,8 @@ function App({ demo = false }: PropsType) {
                         <Typography variant="h6">
                             Todolist
                         </Typography>
-                        {isLoggedIn&& <Button color="inherit" onClick={logoutHandler}>Logout</Button> }
-                        
+                        {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Logout</Button>}
+
                     </Toolbar>
                 </AppBar>
 
