@@ -1,6 +1,7 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Dispatch } from "redux"
 import { authAPI } from "../api/api"
-import { slice } from "./auth-reducer"
+import { setIsLoggedInAC } from "./auth-reducer"
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
@@ -15,57 +16,34 @@ export enum StatuseesCode {
     captcha = 10
 };
 
-type InitialStateType = typeof initialState;
-
-export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch (action.type) {
-        case 'App/SET-STATUS':
-            return { ...state, status: action.status }
-        case 'App/SET-ERROR':
-            return { ...state, error: action.error }
-        case 'App/SET-IS-INITIALIZED':
-            return { ...state, isInitialized: action.isInitialized }
-        default:
-            return state
+//type InitialStateType = typeof initialState;
+const slice = createSlice({
+    name: "app",
+    initialState: initialState,
+    reducers: {
+        setAppStatusAC: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
+            { state.status = action.payload.status }
+        },
+        setAppErrorAC: (state, action: PayloadAction<{ error: string | null }>) => {
+            { state.error = action.payload.error }
+        },
+        setIsInitializedAC: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
+            { state.isInitialized = action.payload.isInitialized }
+        }
     }
-};
+})
+export const { setAppErrorAC, setAppStatusAC, setIsInitializedAC } = slice.actions;
+export const appReducer = slice.reducer;
 
-export const setAppStatusAC = (status: RequestStatusType) => {
-    return {
-        type: 'App/SET-STATUS',
-        status
-    } as const
-};
-
-export const setAppErrorAC = (error: string | null) => {
-    return {
-        type: 'App/SET-ERROR',
-        error
-    } as const
-};
-
-export const setIsInitializedAC = (isInitialized: boolean) => {
-    return {
-        type: 'App/SET-IS-INITIALIZED',
-        isInitialized
-    } as const
-};
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
         if (res.data.resultCode === StatuseesCode.successs) {
-            dispatch(slice.actions.setIsLoggedInAC({ value: true }));
+            dispatch(setIsLoggedInAC({ value: true }));
         } else {
 
         }
     }).finally(() => {
-        dispatch(setIsInitializedAC(true))
+        dispatch(slice.actions.setIsInitializedAC({ isInitialized: true }))
     })
 };
-
-export type SetAppErrorType = ReturnType<typeof setAppErrorAC>;
-export type SetAppStatusType = ReturnType<typeof setAppStatusAC>;
-export type SetIsInitializedType = ReturnType<typeof setIsInitializedAC>;
-
-type ActionsType = SetAppStatusType | SetAppErrorType | SetIsInitializedType;
-

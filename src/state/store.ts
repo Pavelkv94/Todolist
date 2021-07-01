@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
 // непосредственно создаём store
 //export const store = createStore(rootReducer, applyMiddleware(thunk));
 
+//ReduxToolKit
 export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
