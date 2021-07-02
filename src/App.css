@@ -39,3 +39,6 @@
   font-weight: 500;
   cursor: default;
 }
+.App {
+  height: 100%;
+}
