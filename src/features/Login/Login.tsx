@@ -45,7 +45,7 @@ export const Login = () => {
         return <Redirect to={'/'} />
     } else {
         return <Grid container justify="center">
-            <Grid item xs={4}>
+            <Grid>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
                         <FormLabel>
