@@ -1,19 +1,18 @@
 import './App.css';
 import { Container, LinearProgress, CircularProgress } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
 import { initializeAppTC, RequestStatusType } from './state/app-reducer';
 import { ErrorSnackbar } from './components/ErrorSnackbar/ErrorSnackbar';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Login } from './features/Login/Login';
 import { TodolistsList } from './TodolistsList';
 import { TaskType } from './api/api';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { logoutTC } from './state/auth-reducer';
 import ParticlesBg from 'particles-bg'
 import { CustomNewAppBar } from './components/AppBar/AppBar';
-import { addTodolistTC } from './state/todolists-reducer';
+
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -53,11 +52,11 @@ function App({ demo = false }: PropsType) {
             <CircularProgress />
         </div>
     };
-  
+
     return (
         <div className="App">
             <ParticlesBg type="polygon" bg={true} />
-            <BrowserRouter>
+            <HashRouter>
                 <ErrorSnackbar />
                 <CustomNewAppBar isLoggedIn={isLoggedIn} logoutHandler={logoutHandler} />
 
@@ -71,7 +70,7 @@ function App({ demo = false }: PropsType) {
                         <Redirect from={'*'} to={'/'} />
                     </Switch>
                 </Container>
-            </BrowserRouter>
+            </HashRouter>
         </div>
     );
 };
