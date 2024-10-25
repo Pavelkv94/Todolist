@@ -49,7 +49,7 @@ export const Login = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
                         <FormLabel>
-                            <p>To log in get registered
+                            <p>To log in get registered{" "}
                                 <a href={'https://social-network.samuraijs.com/'}
                                     target={'_blank'}>here
                                 </a>
